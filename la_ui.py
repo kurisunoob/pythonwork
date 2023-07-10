@@ -4,12 +4,15 @@ from time import strftime, localtime
 from Myconfig import *
 from openpyxl import load_workbook
 from tkinter import *
+from tkinter import scrolledtext
 sheetmap = {}
 configfile = []
 configstr = []
 UsingCount = 0
 fileFD = []
 resultfilename ="result_ui"
+ResultStr = ""
+Editor = "EmEditor.exe"
 def SetPath():
     Language_Path = "C:\\fangdong\simulator_landlord_GB\simulator_landlord\ExDataHome\Excel\Excel";
     os.chdir(Language_Path)
@@ -66,8 +69,6 @@ def Searchs():
         for strs in configstr:
             _Searchs(filename, strs,fileFD)
     fileFD.close()
-    self_commands = f"EmEditor.exe {resultfilename}"
-    os.system(self_commands)
 def _Searchs(name , _str,_fileFD):
     dirc = sheetmap[name]
     templist = []
@@ -77,12 +78,30 @@ def _Searchs(name , _str,_fileFD):
 
     templist = sorted(templist,key=lambda x:len(x[1]),reverse=True)
 
+    global ResultStr
     _fileFD.write(f"{name} [{_str}] \n")
+    ResultStr +=(f"{name} [{_str}] \n")
     for tem in templist[:int(UsingCount)]:
         _fileFD.write(f"{tem[0]} {tem[1]} {len(tem[1])} \n")
-def ButtonClick():
+        ResultStr += (f"{tem[0]} {tem[1]} {len(tem[1])} \n")
+
+
+def ButtonClick(Mod):
+    global ResultStr
+    ResultStr = ""
     GetConfig()
     Searchs()
+    if(Mod == "App"):
+        self_commands = f"{Editor} {resultfilename}"
+        os.system(self_commands)
+    elif (Mod == "Show"):
+        #Label(root, text=ResultStr).grid(row=1, column=1)
+        newwindow = Tk()
+        window = scrolledtext.ScrolledText(newwindow,wrap=tkinter.WORD,width = 100,height = 60,font=("Time New Roman",15))
+        window.insert(INSERT,ResultStr)
+        window.grid(row=0,column=0)
+        newwindow.mainloop()
+
 if __name__ == '__main__':
     nowpath = os.getcwd()
     resultfilename = f"{nowpath}\\{resultfilename}{strftime('%Y_%m_%d_%H_%M_%S',localtime())}.txt"
@@ -98,7 +117,10 @@ if __name__ == '__main__':
         for fi in file:
             if "Language" in fi and "csv" not in fi and '~' not in fi:
                 CheckVar = IntVar()
-                Checkbutton(master=left_frame,text=fi,variable=CheckVar,onvalue=1,offvalue=0,height=1,width=50).pack()
+                ck = Checkbutton(master=left_frame,text=fi,variable=CheckVar,onvalue=1,offvalue=0,height=1,width=50)
+                if("E" in fi):
+                    ck.select()
+                ck.pack()
                 CheckVarDic[fi] = CheckVar
     #======================================
     right_frame = Frame(root)
@@ -107,13 +129,16 @@ if __name__ == '__main__':
     Label(right_frame,text="展示数量:").grid(row=1)
 
     strtext = Entry(right_frame)
+    strtext.insert(0,"TreeHole_Q_*,TreeHole_Answer_*")
     strtext.grid(row=0, column=1)
     strcount = Entry(right_frame)
+    strcount.insert(0,"5")
     strcount.grid(row=1, column=1)
 
 
     #====================================
     down_frame = Frame(root)
     down_frame.grid(row=1,column=0)
-    Button(down_frame, text="查询", command=ButtonClick).pack()
+    Button(down_frame, text="查询_外部打开", command=lambda : ButtonClick("App")).pack()
+    Button(down_frame, text="查询_ 查看", command=lambda : ButtonClick("Show")).pack()
     root.mainloop()

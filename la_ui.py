@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 from time import strftime, localtime
 from Myconfig import *
 from openpyxl import load_workbook
@@ -76,10 +77,10 @@ def Searchs():
             _Searchs(filename, strs, fileFD)
     fileFD.close()
 
-
 def _Searchs(name, _str, _fileFD):
     dirc = sheetmap[name]
     templist = []
+    templist.clear()
     for temp in dirc.items():
         if re.search(str(_str), str(temp[0])):
             templist.append(temp)
@@ -116,6 +117,19 @@ def vaildcallback(event):
     if event.char.isdigit() or event.char == '\x08':
         return True
     return 'break'
+
+
+def ClearTXT():
+    Language_Path = "C:\\fangdong\simulator_landlord_GB\simulator_landlord\ExDataHome\Excel\Excel";
+    os.chdir(sys.path[0])
+    for root, dirs, file in os.walk('.', topdown=False, followlinks=False):
+        for fi in file:
+            if "txt" in fi:
+                print(f"{bcolors.OKGREEN}Remove File{fi}{bcolors.ENDC}")
+                os.remove(fi)
+    os.chdir(Language_Path)
+
+
 if __name__ == '__main__':
     nowpath = os.getcwd()
     resultfilename = f"{nowpath}\\{resultfilename}{strftime('%Y_%m_%d_%H_%M_%S', localtime())}.txt"
@@ -125,14 +139,14 @@ if __name__ == '__main__':
     root.title("te")
     root.config(bg="skyblue")
     # ======================================
-    left_frame = LabelFrame(root,text="language xlsx")
-    left_frame.grid(row=0, column=0,padx=20,pady=10)
+    left_frame = LabelFrame(root, text="language xlsx")
+    left_frame.grid(row=0, column=0, padx=20, pady=10)
     for roots, dirs, file in os.walk('.', topdown=False, followlinks=False):
         for fi in file:
             if "Language" in fi and "csv" not in fi and '~' not in fi:
                 CheckVar = IntVar()
                 ck = Checkbutton(master=left_frame, text=fi, variable=CheckVar, onvalue=1, offvalue=0, height=1,
-                                 width=30,anchor="w")
+                                 width=30, anchor="w")
                 ck.pack()
                 CheckVarDic[fi] = CheckVar
     # ======================================
@@ -144,7 +158,7 @@ if __name__ == '__main__':
     strtext.insert(0, "TreeHole_Q_*,TreeHole_Answer_*")
     strtext.grid(row=0, column=1)
     strcount = Entry(right_frame, width=5)
-    strcount.bind('<KeyPress>',vaildcallback)
+    strcount.bind('<KeyPress>', vaildcallback)
     strcount.insert(0, "5")
     strcount.grid(row=1, column=1)
 
@@ -153,4 +167,5 @@ if __name__ == '__main__':
     down_frame.grid(row=1, column=0)
     Button(down_frame, text="查询_外部打开", command=lambda: ButtonClick("App")).pack()
     Button(down_frame, text="查询_ 查看", command=lambda: ButtonClick("Show")).pack()
+    Button(down_frame, text="清理文本", command=lambda: ClearTXT()).pack()
     root.mainloop()

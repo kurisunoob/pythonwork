@@ -113,7 +113,7 @@ def ButtonClick(Mod):
 
 def vaildcallback(event):
     print(event.char)
-    if event.char.isdigit():
+    if event.char.isdigit() or event.char == '\x08':
         return True
     return 'break'
 if __name__ == '__main__':

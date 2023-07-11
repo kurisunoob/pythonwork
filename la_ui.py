@@ -77,6 +77,8 @@ def Searchs():
             _Searchs(filename, strs, fileFD)
     fileFD.close()
 
+def sorter(item):
+    return len(item[1])
 def _Searchs(name, _str, _fileFD):
     dirc = sheetmap[name]
     templist = []
@@ -85,7 +87,7 @@ def _Searchs(name, _str, _fileFD):
         if re.search(str(_str), str(temp[0])):
             templist.append(temp)
 
-    templist = sorted(templist, key=lambda x: len(x[1]), reverse=True)
+    templist = sorted(templist, key=sorter, reverse=True)
 
     global ResultStr
     _fileFD.write(f"{name} [{_str}] \n")

@@ -133,7 +133,7 @@ def ClearTXT():
 
 
 if __name__ == '__main__':
-    nowpath = os.getcwd()
+    nowpath = sys.path[0]
     resultfilename = f"{nowpath}\\{resultfilename}{strftime('%Y_%m_%d_%H_%M_%S', localtime())}.txt"
     SetPath()
     CheckVarDic = {}

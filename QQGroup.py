@@ -1,9 +1,7 @@
-from Myconfig import *
-from tkinter import *
-from tkinter import scrolledtext
-import sys
 import pyperclip
+from Myconfig import *
 import re
+import ctypes
 
 androidparent="(?<=p\()\S+(?=\))"
 IOSparent="(?<=,@\")\S+(?=\"])"
@@ -14,31 +12,29 @@ def ConcatenateString(Android,IOS,IOSNumber):
      pyperclip.copy(resultStr)
 
 def OnButtonClick():
-    allstr=pyperclip.paste()
+    try :
+        allstr=pyperclip.paste()
 
-    pattern = re.compile(androidparent)
-    temp=pattern.search(allstr)
-    androidresult=temp.group()
+        pattern = re.compile(androidparent)
+        temp=pattern.search(allstr)
+        androidresult=temp.group()
 
-    pattern = re.compile(IOSparent)
-    temp=pattern.search(allstr)
-    IOSresult = temp.group()
+        pattern = re.compile(IOSparent)
+        temp=pattern.search(allstr)
+        IOSresult = temp.group()
 
-    pattern = re.compile(IOSNumparent)
-    temp=pattern.search(allstr)
-    IOSNumresult = temp.group()
-    print(androidresult)
-    print(IOSresult)
-    print(IOSNumresult)
+        pattern = re.compile(IOSNumparent)
+        temp=pattern.search(allstr)
+        IOSNumresult = temp.group()
+        print(f"{androidresult} + lens: {len(androidresult)}")
+        print(f"{IOSresult} + lens: {len(IOSresult)}")
+        print(f"{IOSNumresult} + lens: {len(IOSNumresult)}")
+        ConcatenateString(androidresult,IOSresult,IOSNumresult)
+        if len(androidresult) != 32 or len(IOSresult) != 64 or len(IOSNumresult) != 9:
+            raise Exception("格式错误")
+    except Exception as e:
+        ctypes.windll.user32.MessageBoxW(0,str(e),"错误",0)
 
-    ConcatenateString(androidresult,IOSresult,IOSNumresult)
 
 if __name__ == '__main__':
-    # root = Tk()
-    # root.title("te")
-    # root.config(bg="skyblue")
-    # down_frame = Frame(root)
-    # down_frame.grid(row=0, column=0)
-    # Button(down_frame, text="解析", command=lambda:OnButtonClick()).pack()
-    # root.mainloop()
     OnButtonClick();

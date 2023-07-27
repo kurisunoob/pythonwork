@@ -32,8 +32,9 @@ def OnButtonClick():
         ConcatenateString(androidresult,IOSresult,IOSNumresult)
         if len(androidresult) != 32 or len(IOSresult) != 64 or len(IOSNumresult) != 9:
             raise Exception("格式错误")
+        exit(0)
     except Exception as e:
-        ctypes.windll.user32.MessageBoxW(0,str(e),"错误",0)
+        ctypes.windll.user32.MessageBoxW(0,type(e).__name__+": "+str(e),"错误",0)
 
 
 if __name__ == '__main__':

@@ -26,15 +26,18 @@ def OnButtonClick():
         pattern = re.compile(IOSNumparent)
         temp=pattern.search(allstr)
         IOSNumresult = temp.group()
-        print(f"{androidresult} + lens: {len(androidresult)}")
-        print(f"{IOSresult} + lens: {len(IOSresult)}")
-        print(f"{IOSNumresult} + lens: {len(IOSNumresult)}")
+        print(f"{androidresult} - lens: {len(androidresult)}")
+        print(f"{IOSresult} - lens: {len(IOSresult)}")
+        print(f"{IOSNumresult} - lens: {len(IOSNumresult)}")
+        print(f"{IOSNumresult}")
         ConcatenateString(androidresult,IOSresult,IOSNumresult)
         if len(androidresult) != 32 or len(IOSresult) != 64 or len(IOSNumresult) != 9:
             raise Exception("格式错误")
-        exit(0)
     except Exception as e:
         ctypes.windll.user32.MessageBoxW(0,type(e).__name__+": "+str(e),"错误",0)
+        return False
+    return True
+
 
 
 if __name__ == '__main__':

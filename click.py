@@ -13,4 +13,5 @@ def log(fun):
 def now(x, *, y=1, z=1):
     print(f"{bcolors.OKGREEN}{x * 2 + y + z}{bcolors.ENDC}")
 
-now(2)
+if __name__ == "__main__":
+    now(2)

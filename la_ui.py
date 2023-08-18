@@ -78,6 +78,9 @@ def Searchs():
     fileFD.close()
 
 def sorter(item):
+    if item[1] is None :
+        print(item)
+        return False;
     return len(item[1])
 def _Searchs(name, _str, _fileFD):
     dirc = sheetmap[name]
@@ -126,7 +129,7 @@ def ClearTXT():
     os.chdir(sys.path[0])
     for root, dirs, file in os.walk('.', topdown=False, followlinks=False):
         for fi in file:
-            if "txt" in fi:
+            if "txt" in fi and "result" in fi:
                 print(f"{bcolors.OKGREEN}Remove File{fi}{bcolors.ENDC}")
                 os.remove(fi)
     os.chdir(Language_Path)

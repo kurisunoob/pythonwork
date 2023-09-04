@@ -34,3 +34,4 @@ def CompareHours_IsBeLate(LimitTime:datetime,persondate:PersonData):
 
 def CompareHours_LeaveEarly(LimitTime:datetime,persondate:PersonData):
     return( persondate.OffWorkTime < LimitTime)
+

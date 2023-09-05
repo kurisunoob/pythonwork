@@ -21,3 +21,7 @@ JoinKey = "D"
 OnWorkKey = "E"
 OffWorkKey = "F"
 BeginNumber = 3
+
+PersonalLeaveList=[]
+SickLeaveList=[]
+YearLeaveList=[]

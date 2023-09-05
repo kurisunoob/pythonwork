@@ -1,8 +1,11 @@
 # 跳过或者添加特定日期
+import sys
+
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import Data as globaldata
 from persondata import *
+from Parse import refreshleavelist
 from ttkbootstrap.style import Bootstyle
 def SkipDate(JoinDateTime:datetime):
     for date in globaldata.ContainInfoDate:
@@ -63,7 +66,7 @@ class LeaveDataDialog(ttk.Frame):
         lbl = ttk.Label(master=container, text=label.title(), width=10)
         lbl.pack(side=LEFT, padx=5)
 
-        ls = ttk.DateEntry(master=container)
+        ls = ttk.DateEntry(master=container,dateformat="%x")
         ls.pack(side=LEFT, padx=5, fill=X, expand=YES)
         self.completedata = ls.entry
     def create_form_dateentry_leave(self,label):
@@ -114,8 +117,12 @@ class LeaveDataDialog(ttk.Frame):
 
     def on_submit(self):
         """Print the contents to console and return the values."""
-        ledate = datetime.datetime.strptime(str(self.leavedata.get()), '%Y/%m/%d');
-        comdate = datetime.datetime.strptime(str(self.completedata.get()), '%Y/%m/%d');
+        if sys.platform == 'win32':
+            ledate = datetime.datetime.strptime(str(self.leavedata.get()), '%Y/%m/%d');
+            comdate = datetime.datetime.strptime(str(self.completedata.get()), '%Y/%m/%d');
+        else:
+            ledate = datetime.datetime.strptime(str(self.leavedata.get()), '%Y年%m月%d日');
+            comdate = datetime.datetime.strptime(str(self.completedata.get()), '%Y年%m月%d日');
         match self.leavereason.get():
             case 1:
                 globaldata.SickLeaveList.append(SickLeavaData(self.name.get(), ledate, comdate, self.leavehours))
@@ -123,6 +130,7 @@ class LeaveDataDialog(ttk.Frame):
                 globaldata.PersonalLeaveList.append( PersonalLeaveData(self.name.get(), ledate, comdate, self.leavehours))
             case 3:
                 globaldata.YearLeaveList.append(YearLeavaData(self.name.get(), ledate, comdate, self.leavehours))
+
 
 class Calculator(ttk.Frame):
     def __init__(self, master, **kwargs):

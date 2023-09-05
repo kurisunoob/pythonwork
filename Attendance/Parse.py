@@ -19,14 +19,15 @@ def showdialog():
     window = ttk.Toplevel(title="Time")
     print(config.LeaveDataDialog(window))
     window.mainloop()
-x = 1
 group1 = 1
-def AddLeave():
-    global x
-    global  group1
+def refreshleavelist():
+    global group1
+    for item in group1.winfo_children():
+        item.destroy()
     for personal in globaldata.PersonalLeaveList:
-        ttk.Checkbutton(group1, text=f'{personal.Name}').pack(fill=X)
-    x = x+1
+        ttk.Button(group1, text=f'{personal.Name}',command=(
+            lambda: globaldata.PersonalLeaveList.remove(personal)
+                   )).pack(fill=X)
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
@@ -37,7 +38,7 @@ if __name__ == '__main__':
     cf=config.CollapsingFrame(tk)
     group1=ttk.Frame(cf,padding=10)
     cf.add(child=group1,title="banner1")
-    ttk.Button(command=AddLeave,bootstyle="success",text="刷新").pack(anchor=ttk.S,pady=5,side=TOP)
+    ttk.Button(command=refreshleavelist,bootstyle="success",text="刷新").pack(anchor=ttk.S,pady=5,side=TOP)
 
     cf.pack()
     right_frame = ttk.Frame(tk,bootstyle="info",height=50,width=50)

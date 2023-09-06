@@ -272,22 +272,6 @@ class CollapsingFrame(ttk.Frame):
 
 
     def add(self, child, title="", bootstyle=PRIMARY, **kwargs):
-        """Add a child to the collapsible frame
-
-        Parameters:
-
-            child (Frame):
-                The child frame to add to the widget.
-
-            title (str):
-                The title appearing on the collapsible section header.
-
-            bootstyle (str):
-                The style to apply to the collapsible section header.
-
-            **kwargs (Dict):
-                Other optional keyword arguments.
-        """
         if child.winfo_class() != 'TFrame':
             return
 

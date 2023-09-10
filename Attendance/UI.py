@@ -320,7 +320,11 @@ def bContainPersonData(_list: list, person):
         if item == person:
             return True
     return False
+
+
 def show_message(str):
-   root = ttk.Toplevel()
-   root.title="提示"
-   root.mainloop()
+    root = ttk.Toplevel()
+    root.title = "提示"
+    labels = ttk.Label(root, text=str)
+    labels.pack()
+    root.mainloop()

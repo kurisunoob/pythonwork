@@ -6,9 +6,12 @@ import windnd
 import ExcelParse
 import UI as ui
 import Data as globaldata
+import persondata
 
 # globa data
-group1: ttk.Frame
+LeaveListGroup: ttk.Frame
+SickLeaveGroup: ttk.Frame
+YearLeaveGroup: ttk.Frame
 
 attendanceSheetPath = ""
 
@@ -18,12 +21,20 @@ def printname(fiel):
 
 
 def showlist():
-    global group1
+    global LeaveListGroup
+    global SickLeaveGroup
+    global YearLeaveGroup
     window = ttk.Toplevel(title="Time")
     cf = ui.CollapsingFrame(window)
-    group1 = ttk.Frame(cf, padding=10)
+    LeaveListGroup = ttk.Frame(cf, padding=10)
+    SickLeaveGroup = ttk.Frame(cf, padding=10)
+    YearLeaveGroup = ttk.Frame(cf, padding=10)
     refreshleavelist()
-    cf.add(child=group1, title="banner1")
+    refreshsicklist()
+    refreshyearlist()
+    cf.add(child=LeaveListGroup, title="事假名单:")
+    cf.add(child=SickLeaveGroup, title="病假名单:")
+    cf.add(child=YearLeaveGroup, title="年假名单:")
     cf.pack()
     window.mainloop()
 
@@ -39,14 +50,45 @@ def showdialog():
     print(ui.LeaveDataDialog(window))
     window.mainloop()
 
+def RemovePersonalLeaveData(data:persondata.PersonalLeaveData):
+    for _data in globaldata.PersonalLeaveList:
+        if _data == data:
+            globaldata.PersonalLeaveList.remove(_data)
+    refreshleavelist()
 
 def refreshleavelist():
-    global group1
-    for item in group1.winfo_children():
+    global LeaveListGroup
+    for item in LeaveListGroup.winfo_children():
         item.destroy()
     for personal in globaldata.PersonalLeaveList:
-        ttk.Button(group1, text=f'{personal.Name}',
-                   command=(lambda: globaldata.PersonalLeaveList.remove(personal))).pack(fill=X)
+        button = ttk.Button(LeaveListGroup,name=f'{personal.Name}|{personal.LeaveHours}|{personal.LeaveTime.strftime("%Y:%m:%d")}|{personal.CompleteTime.strftime("%Y:%m:%d")}', text=f'姓名:{personal.Name},请假时间:{personal.LeaveHours},请假时间:{personal.LeaveTime.strftime("%Y:%m:%d")},完成时间:{personal.CompleteTime.strftime("%Y:%m:%d")}')
+        button.configure(command= lambda b=personal:RemovePersonalLeaveData(b))
+        button.pack(fill=X)
+
+def RemoveSickLeaveData(data:persondata.SickLeavaData):
+    for _data in globaldata.SickLeaveList:
+        if _data == data:
+            globaldata.SickLeaveList.remove(_data)
+    refreshsicklist()
+
+def refreshsicklist():
+    global SickLeaveGroup
+    for item in SickLeaveGroup.winfo_children():
+        item.destroy()
+    for personal in globaldata.SickLeaveList:
+        ttk.Button(SickLeaveGroup, text=f'姓名:{personal.Name},请假时间:{personal.LeaveHours},请假时间:{personal.LeaveTime.strftime("%Y:%m:%d")},完成时间:{personal.CompleteTime.strftime("%Y:%m:%d")}', command=(lambda : RemoveSickLeaveData(personal))).pack(fill=X);
+def RemoveYearLeaveData(data:persondata.YearLeavaData):
+    for _data in globaldata.YearLeaveList:
+        if _data == data:
+            globaldata.YearLeaveList.remove(_data)
+    refreshyearlist()
+
+def refreshyearlist():
+    global YearLeaveGroup
+    for item in YearLeaveGroup.winfo_children():
+        item.destroy()
+    for personal in globaldata.YearLeaveList:
+        ttk.Button(YearLeaveGroup, text=f'姓名:{personal.Name},请假时间:{personal.LeaveHours},请假时间:{personal.LeaveTime.strftime("%Y:%m:%d")},完成时间:{personal.CompleteTime.strftime("%Y:%m:%d")}', command=(lambda : RemoveYearLeaveData(personal))).pack(fill=X);
 
 
 if __name__ == '__main__':

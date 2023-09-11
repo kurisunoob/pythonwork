@@ -17,9 +17,18 @@ class PersonData:
     def __eq__(self, other):
         return self.Name == other.Name and self.JoinDateTime == other.JoinDateTime and self.OnWorkTime == other.OnWorkTime and self.OffWorkTime == other.OffWorkTime
 
+    def bPersonDataWithNameAndData(self,_name:str,Data:datetime):
+        if self.Name == _name and Data.time.weekday() == self.JoinDateTime.weekday():#todo 细化时间的比较 新建一个工具py
+            return True
+        return False
+
     def print(self):
         print(
             f"{self.Name} : {type(self.Name)};{self.JoinDateTime} : {type(self.JoinDateTime)};{self.OnWorkTime} : {type(self.OnWorkTime)};{self.OffWorkTime} : {type(self.OffWorkTime)}")
+    #todo 得到迟到时间
+        #todo 处理特殊的上班时间
+    #todo 得到早退时间
+        #todo 处理特殊的下班时间
 
 
 class PersonalLeaveData:

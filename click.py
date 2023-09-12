@@ -1,4 +1,5 @@
 from Myconfig import *
+import datetime
 
 def log(fun):
     def wrapper(*args, **kw):
@@ -14,4 +15,8 @@ def now(x, *, y=1, z=1):
     print(f"{bcolors.OKGREEN}{x * 2 + y + z}{bcolors.ENDC}")
 
 if __name__ == "__main__":
-    now(2)
+    onwork = datetime.time(10,0,0)
+    standard = datetime.time(9,0,0)
+    times = datetime.datetime.combine(datetime.datetime.today(),onwork) - datetime.datetime.combine(datetime.datetime.today(),standard)
+    print(f'{onwork=}')
+

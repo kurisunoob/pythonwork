@@ -7,6 +7,7 @@ import ExcelParse
 import UI as ui
 import Data as globaldata
 import persondata
+import leaveutil as util
 
 # globa data
 LeaveListGroup: ttk.Frame
@@ -24,17 +25,100 @@ def datapross():
     __sickleavedatapross()
     __yearleavedatapross()
     pass
+#查询事假超过天数的人
+def __personalleavedatapross_overdays():
+    temppersonlist = globaldata.PersonalLeaveList.copy()
+    oklist=[]
+    notoklist = []
+    for _data in temppersonlist:
+        hourcount = 0;
+        if _data.Name in oklist or _data.Name in notoklist:
+            continue
+        for __data in temppersonlist:
+            if _data.Name == __data.Name:
+                hourcount += _data
+                if hourcount >= 4*24:
+                    notoklist.append(_data.Name)
+                    break
+        oklist.append(_data.Name)
+    messagestr=''
+    for _date in notoklist:
+        messagestr = messagestr+ f"{_date} 这个月超过了事假期限需要核查\n"
+    ui.show_message(messagestr)
+#查询病假超过天数的人
+def __sickleavedatapross_overdays():
+    temppersonlist = globaldata.SickLeaveList.copy()
+    oklist=[]
+    notoklist = []
+    for _data in temppersonlist:
+        hourcount = 0;
+        if _data.Name in oklist or _data.Name in notoklist:
+            continue
+        for __data in temppersonlist:
+            if _data.Name == __data.Name:
+                hourcount += _data
+                if hourcount >= 3*24:
+                    notoklist.append(_data.Name)
+                    break
+        oklist.append(_data.Name)
+    messagestr=''
+    for _date in notoklist:
+        messagestr = messagestr+ f"{_date} 这个月超过了病假假期限需要核查\n"
+    ui.show_message(messagestr)
+#查询年假超过天数的人
+def __yearleavedatapross_overdays():
+    # 年假需要特殊处理
+    pass
 def __personalleavedatapross():
+    __personalleavedatapross_overdays()
+    leaveperson_data =0;
+    complete_data=0;
     for leavedata in globaldata.PersonalLeaveList:
         name = leavedata.Name
         leavetime = leavedata.LeaveTime
         completetime = leavedata.CompleteTime
         hours = leavedata.LeaveHours
-
-
-    pass
+        for person in globaldata.AllDataList:
+            if person.bPersonDataWithNameAndData(name,leavetime):
+                leaveperson_data = person
+            if person.bPersonDataWithNameAndData(name, completetime):
+                complete_data = person
+            if leaveperson_data != 0 and complete_data != 0:
+                break
+        if complete_data == 0 or leaveperson_data == 0:
+            ui.show_message("数据出错")
+        retaketime = util.getretaketime(complete_data)
+        if util.converttimetofloat(retaketime) < hours:
+            pass
+           #globaldata.ErrorList = leavedata.print()
+        else:
+            globaldata.PersonalLeaveList.remove(leavedata)
 def __sickleavedatapross():
-    pass
+    __sickleavedatapross_overdays()
+    leaveperson_data =0;
+    complete_data=0;
+    for leavedata in globaldata.SickLeaveList:
+        name = leavedata.Name
+        leavetime = leavedata.LeaveTime
+        completetime = leavedata.CompleteTime
+        hours = leavedata.LeaveHours
+        for person in globaldata.AllDataList:
+            if person.bPersonDataWithNameAndData(name,leavetime):
+                leaveperson_data = person
+            if person.bPersonDataWithNameAndData(name, completetime):
+                complete_data = person
+            if leaveperson_data != 0 and complete_data != 0:
+                break
+        if complete_data == 0 or leaveperson_data == 0:
+            ui.show_message("数据出错")
+        retaketime = util.getretaketime(complete_data)
+        if util.converttimetofloat(retaketime) < hours/2:
+            pass
+        #globaldata.ErrorList = leavedata.print()
+        else:
+            globaldata.SickLeaveList.remove(leavedata)
+
+#年假需要特殊处理
 def __yearleavedatapross():
     pass
 def showlist():

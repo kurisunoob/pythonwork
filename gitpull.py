@@ -19,18 +19,18 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 paths = [
-    "E:\\fd\simulator2_landlord_android\\android_oversea\\simulator_landlord",
-    "E:\\fd\simulator2_landlord_ios\simulator_landlord_ios_oversea\simulator_landlord",
-    "E:\\fd\simulator2_landlord_ios\simulator_landlord_ios_oversea_jp\simulator_landlord",
-    "E:\\fd\simulator2_landlord_ios\simulator_landlord_ios_oversea_en\simulator_landlord",
-    "E:\\fd\simulator2_landlord_android\\android_onestore\simulator_landlord",
+    "E:\\fd\simulator2_landlord_android\\android_ads\simulator_landlord",
+    "E:\\fd\simulator2_landlord_ios\simulator_landlord_ios\simulator_landlord",
+    "E:\\fd\simulator2_landlord_android\\android_ads_taptap\simulator_landlord",
+    "E:\\fd\simulator2_landlord_android\\android_ads_parent\simulator_landlord",
+    "E:\\fd\simulator2_landlord_android\\android_ads_xiaomi",
 ]
 merge_commands = [
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_oversea_master",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_oversea_master",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_oversea_mater_ios",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_oversea_mater_ios",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_oversea_master_android"
+    "git.exe pull --progress -v --no-rebase \"origin\" sim2_master",
+    "git.exe pull --progress -v --no-rebase \"origin\" sim2_master",
+    "git.exe pull --progress -v --no-rebase \"origin\" sim2_android_ads",
+    "git.exe pull --progress -v --no-rebase \"origin\" sim2_android_ads",
+    "git.exe pull --progress -v --no-rebase \"origin\" sim2_android_ads"
 ]
 push_commands = [
         "TortoiseGitProc.exe /command:push /closeonend:2",

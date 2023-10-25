@@ -1,5 +1,7 @@
 import os
 import time
+from concurrent.futures import thread
+
 import win32gui
 import win32api
 import win32con
@@ -39,7 +41,24 @@ push_commands = [
         "TortoiseGitProc.exe /command:push /closeonend:2",
         "TortoiseGitProc.exe /command:push /closeonend:2"
 ]
+def _thread_self_pull(i):
+    path = paths[i]
+    os.chdir(path)
+    print(f"{bcolors.OKBLUE}path: {os.getcwd()}{bcolors.ENDC}")
+    self_commands = "git.exe pull --progress -v --no-rebase \"origin\""
+    os.system(self_commands)
+def thread_self_pull():
+    for i in range(len(paths)):
+        thrd = threading.Thread(target=_thread_self_pull(i))
+        print(thrd.name)
+        thrd.start()
 
+def _printActivityThread():
+    while True:
+        print(f"现在的线程有: {threading.active_count()}")
+def thread_print_threadcount():
+    rd = threading.Thread(target=_printActivityThread())
+    rd.start()
 def self_pull():
     for path in paths:
         os.chdir(path)
@@ -93,6 +112,6 @@ def Click():
 
 
 if __name__ == "__main__":
+    #thread_self_pull()
     self_pull()
-    merge_pull()
-    #test()
+    # merge_pull()

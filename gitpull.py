@@ -1,3 +1,4 @@
+import datetime
 import os
 import time
 from concurrent.futures import thread
@@ -112,6 +113,5 @@ def Click():
 
 
 if __name__ == "__main__":
-    #thread_self_pull()
     self_pull()
-    # merge_pull()
+    merge_pull()

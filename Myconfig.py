@@ -1,3 +1,4 @@
+import time
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -8,3 +9,8 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+def PrintTime(s):
+    localtime = time.localtime(time.time())
+    Strftime = time.strftime("%Y-%m-%d %H:%M:%S", localtime)
+    print(s, Strftime)

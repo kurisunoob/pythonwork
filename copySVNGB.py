@@ -16,9 +16,9 @@ def copy():
         print('Directory not copied.')
         print(e)
 
-source_dir = 'C:\\fangdong\simulator_landlord_GB\simulator_landlord\ExDataHome\Excel\Excel'
-destination_dir = 'E:\\fd\simulator_svn\game\simulator_landlord_GB\ExDataHome\Excel\Excel'
+source_dir = 'D:\\simulator\\PureObject\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel'
+destination_dir = 'D:\\SVN\\trunk\\game\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel'
 copy()
-source_dir = 'C:\\fangdong\simulator_landlord_GB\simulator_landlord\Game\Assets'
-destination_dir = 'E:\\fd\simulator_svn\game\simulator_landlord_GB\Game\Assets'
+source_dir = 'D:\\simulator\\PureObject\\simulator_landlord_GB\\Game\\Assets'
+destination_dir = 'D:\\SVN\\trunk\\game\\simulator_landlord_GB\\Game\\Assets'
 copy()

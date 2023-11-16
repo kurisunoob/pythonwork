@@ -14,11 +14,11 @@ UsingCount = 0
 fileFD = []
 resultfilename = "result_ui"
 ResultStr = ""
-Editor = "EmEditor.exe"
+Editor = "nvim-qt.exe"
 
 
 def SetPath():
-    Language_Path = "C:\\fangdong\simulator_landlord_GB\simulator_landlord\ExDataHome\Excel\Excel";
+    Language_Path = "D:\\simulator\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel";
     os.chdir(Language_Path)
 
 
@@ -125,7 +125,7 @@ def vaildcallback(event):
 
 
 def ClearTXT():
-    Language_Path = "C:\\fangdong\simulator_landlord_GB\simulator_landlord\ExDataHome\Excel\Excel";
+    Language_Path = "D:\\simulator\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel";
     os.chdir(sys.path[0])
     for root, dirs, file in os.walk('.', topdown=False, followlinks=False):
         for fi in file:

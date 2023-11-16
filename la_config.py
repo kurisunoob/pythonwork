@@ -37,7 +37,7 @@ def LoadJson():
 
 
 def LoadXlsl():
-    Language_Path = "C:\\fangdong\simulator_landlord_GB\simulator_landlord\ExDataHome\Excel\Excel";
+    Language_Path = "D:\\simulator\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel";
     Lafile = []
     sheetlist = []
     os.chdir(Language_Path)

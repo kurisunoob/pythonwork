@@ -93,6 +93,5 @@ def Click():
 
 
 if __name__ == "__main__":
-    self_pull()
+    # self_pull()
     merge_pull()
-    #test()

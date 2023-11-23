@@ -22,18 +22,18 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 paths = [
-    "E:\\fd\simulator2_landlord_android\\android_ads\simulator_landlord",
-    "E:\\fd\simulator2_landlord_ios\simulator_landlord_ios\simulator_landlord",
-    "E:\\fd\simulator2_landlord_android\\android_ads_taptap\simulator_landlord",
-    "E:\\fd\simulator2_landlord_android\\android_ads_parent\simulator_landlord",
-    "E:\\fd\simulator2_landlord_android\\android_ads_xiaomi",
+    "D:\\simulator\\PureObject\\gn\\simulator_landlord_android",
+    "D:\\simulator\\PureObject\\gn\\simulator_landlord_ios",
+    "D:\\simulator\\PureObject\\gn\\simulator_landlord_android_taptap",
+    "D:\\simulator\\PureObject\\gn\\simulator_landlord_android_parent",
+    "D:\\simulator\\PureObject\\gn\\simulator_landlord_android_xiaomi",
 ]
 merge_commands = [
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_master",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_master",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_android_ads",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_android_ads",
-    "git.exe pull --progress -v --no-rebase \"origin\" sim2_android_ads"
+    "git.exe pull --progress  --no-rebase \"origin\" sim2_master",
+    "git.exe pull --progress  --no-rebase \"origin\" sim2_master",
+    "git.exe pull --progress  --no-rebase \"origin\" sim2_android_ads",
+    "git.exe pull --progress  --no-rebase \"origin\" sim2_android_ads",
+    "git.exe pull --progress  --no-rebase \"origin\" sim2_android_ads"
 ]
 push_commands = [
         "TortoiseGitProc.exe /command:push /closeonend:2",
@@ -46,7 +46,7 @@ def _thread_self_pull(i):
     path = paths[i]
     os.chdir(path)
     print(f"{bcolors.OKBLUE}path: {os.getcwd()}{bcolors.ENDC}")
-    self_commands = "git.exe pull --progress -v --no-rebase \"origin\""
+    self_commands = "git.exe pull --progress --no-rebase \"origin\""
     os.system(self_commands)
 def thread_self_pull():
     for i in range(len(paths)):
@@ -105,7 +105,7 @@ def Click():
     winhwnds = get_mesh_windows(hWndList, name)
     hWndcList = []
     for wh in winhwnds:
-        hbutton = win32gui.FindWindowEx(wh, 0, 'Button', '确定')
+        hbutton = win32gui.FindWindowEx(wh, 0, 'Button', 'OK')
         print(f"{bcolors.HEADER}{win32gui.GetWindowText(wh)}{bcolors.ENDC}")
         if hbutton != 0:
             win32api.PostMessage(hbutton, win32con.WM_LBUTTONDOWN, 0, 0)

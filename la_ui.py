@@ -14,7 +14,7 @@ UsingCount = 0
 fileFD = []
 resultfilename = "result_ui"
 ResultStr = ""
-Editor = "nvim-qt.exe"
+Editor = "EmEditor.exe"
 
 
 def SetPath():

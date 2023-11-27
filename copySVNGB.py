@@ -7,6 +7,7 @@ def copy():
         localtime = time.localtime(time.time())
         Strftime = time.strftime("%Y-%m-%d %H:%M:%S", localtime)
         print("开始时间为 :", Strftime)
+        shutil.rmtree(destination_dir,True)
         shutil.copytree(source_dir, destination_dir,dirs_exist_ok = True)
         print('Directory copied successfully.')
         localtime = time.localtime(time.time())

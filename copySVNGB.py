@@ -1,7 +1,13 @@
+import os
 import shutil
 import time
 
 
+def git_pull():
+    path= "D:\\simulator\\PureObject\\simulator_landlord_GB";
+    os.chdir(path)
+    self_commands = "git.exe pull --progress -v --no-rebase \"origin\""
+    os.system(self_commands)
 def copy():
     try :
         localtime = time.localtime(time.time())
@@ -16,7 +22,7 @@ def copy():
     except Exception as e:
         print('Directory not copied.')
         print(e)
-
+git_pull()
 source_dir = 'D:\\simulator\\PureObject\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel'
 destination_dir = 'D:\\SVN\\trunk\\game\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel'
 copy()

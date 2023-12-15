@@ -23,6 +23,7 @@ paths = [
     "D:\\simulator\\PureObject\\simulator_landlord_GB_ios",
     "D:\\simulator\\PureObject\\simulator_landlord_GB_ios_EN",
     "D:\\simulator\\PureObject\\simulator_landlord_GB_ios_JP",
+    "D:\\simulator\\PureObject\\simulator_landlord_GB_ios_KR",
     "D:\\simulator\\PureObject\\simulator_landlord_GB_android_ONESTORE",
 ]
 merge_commands = [
@@ -30,9 +31,11 @@ merge_commands = [
     "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_master",
     "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_mater_ios",
     "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_mater_ios",
+    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_mater_ios",
     "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_master_android"
 ]
 push_commands = [
+        "TortoiseGitProc.exe /command:push /closeonend:2",
         "TortoiseGitProc.exe /command:push /closeonend:2",
         "TortoiseGitProc.exe /command:push /closeonend:2",
         "TortoiseGitProc.exe /command:push /closeonend:2",

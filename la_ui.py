@@ -102,8 +102,8 @@ def _Searchs(name, _str, _fileFD):
     _font=1;
     if name in FontList.keys():
         _font = FontList[name]
-    _fileFD.write(f"{name} [{_str}]---[{_font}] \n")
-    ResultStr += (f"{name} [{_str}]---[{_font}] \n")
+    _fileFD.write(f"{name} [{_str}]\n[{_font}] \n")
+    ResultStr += (f"{name} [{_str}]\n[{_font}] \n")
     for tem in templist[:int(UsingCount)]:
         _fileFD.write(f"{tem[0]} {tem[1]} {len(tem[1])} \n")
         ResultStr += (f"{tem[0]}  {len(tem[1])}\n{tem[1]} \n")
@@ -152,7 +152,11 @@ def ChooseLanguageWB():
                 or "Thai" in Key \
                 or "ES" in Key \
                 or "Vietnamese" in Key:
-            CheckVarDic[Key].set(1)
+            if CheckVarDic[Key].get() == 1:
+                CheckVarDic[Key].set(0)
+            else:
+                CheckVarDic[Key].set(1)
+
 
 
 if __name__ == '__main__':

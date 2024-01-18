@@ -16,6 +16,12 @@ resultfilename = "result_ui"
 ResultStr = ""
 Editor = "EmEditor.exe"
 
+FontList= {"Language_Arabic": "ARIALNB", "Language_Russian": "ARIALNB", "Language_TC": "Chinese_TC",
+           "Language_DE": "English", "Language_English": "English", "Language_ES": "Vietnamese",
+           "Language_French": "Vietnamese", "Language_Italian": "Vietnamese", "Language_PTBR": "Vietnamese",
+           "Language_Vietnamese": "Vietnamese", "Language_Japanese": "Japanese", "Language_Korean": "Korean",
+           "Language_Thai": "Thai"}
+
 
 def SetPath():
     Language_Path = "D:\\simulator\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel";
@@ -93,8 +99,11 @@ def _Searchs(name, _str, _fileFD):
     templist = sorted(templist, key=sorter, reverse=True)
 
     global ResultStr
-    _fileFD.write(f"{name} [{_str}] \n")
-    ResultStr += (f"{name} [{_str}] \n")
+    _font=1;
+    if name in FontList.keys():
+        _font = FontList[name]
+    _fileFD.write(f"{name} [{_str}]---[{_font}] \n")
+    ResultStr += (f"{name} [{_str}]---[{_font}] \n")
     for tem in templist[:int(UsingCount)]:
         _fileFD.write(f"{tem[0]} {tem[1]} {len(tem[1])} \n")
         ResultStr += (f"{tem[0]}  {len(tem[1])}\n{tem[1]} \n")
@@ -133,6 +142,17 @@ def ClearTXT():
                 print(f"{bcolors.OKGREEN}Remove File{fi}{bcolors.ENDC}")
                 os.remove(fi)
     os.chdir(Language_Path)
+def ChooseLanguageWB():
+    for Key in CheckVarDic:
+        if "Arabic" in Key \
+                or "DE" in Key \
+                or "Italian" in Key \
+                or "PTBR" in Key \
+                or "Russian" in Key \
+                or "Thai" in Key \
+                or "ES" in Key \
+                or "Vietnamese" in Key:
+            CheckVarDic[Key].set(1)
 
 
 if __name__ == '__main__':
@@ -171,6 +191,7 @@ if __name__ == '__main__':
     down_frame = Frame(root)
     down_frame.grid(row=1, column=0)
     Button(down_frame, text="查询_外部打开", command=lambda: ButtonClick("App")).pack()
-    Button(down_frame, text="查询_ 查看", command=lambda: ButtonClick("Show")).pack()
+    # Button(down_frame, text="查询_ 查看", command=lambda: ButtonClick("Show")).pack()
+    Button(down_frame, text="一键选中外包翻译", command=lambda: ChooseLanguageWB()).pack()
     Button(down_frame, text="清理文本", command=lambda: ClearTXT()).pack()
     root.mainloop()

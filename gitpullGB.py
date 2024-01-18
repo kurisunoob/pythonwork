@@ -4,8 +4,9 @@ import win32gui
 import win32api
 import win32con
 import sys
-#import  msvcrt
+# import  msvcrt
 import threading
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -17,6 +18,7 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
 
 paths = [
     "D:\\simulator\\PureObject\\simulator_landlord_GB_android",
@@ -35,13 +37,14 @@ merge_commands = [
     "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_master_android"
 ]
 push_commands = [
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2"
+    "TortoiseGitProc.exe /command:push /closeonend:2",
+    "TortoiseGitProc.exe /command:push /closeonend:2",
+    "TortoiseGitProc.exe /command:push /closeonend:2",
+    "TortoiseGitProc.exe /command:push /closeonend:2",
+    "TortoiseGitProc.exe /command:push /closeonend:2",
+    "TortoiseGitProc.exe /command:push /closeonend:2"
 ]
+
 
 def self_pull():
     for path in paths:
@@ -50,11 +53,13 @@ def self_pull():
         print(f"{bcolors.OKBLUE}path: {os.getcwd()}{bcolors.ENDC}")
         self_commands = "git.exe pull --progress --no-rebase \"origin\""
         os.system(self_commands)
+
+
 def merge_pull():
     for index, path in enumerate(paths):
         try:
             os.chdir(path)
-            print("path: ",os.getcwd())
+            print("path: ", os.getcwd())
             command = merge_commands[index]
             result = 0;
             result = os.system(command)
@@ -69,6 +74,7 @@ def merge_pull():
             os.system("TortoiseGitProc.exe /command:resolve")
             sys.exit()
 
+
 # 筛选需要的窗口句柄
 def get_mesh_windows(hWndList, name):
     winhwnd = []
@@ -79,6 +85,8 @@ def get_mesh_windows(hWndList, name):
         if name in title:
             winhwnd.append(hWnd)
     return winhwnd
+
+
 def Click():
     time.sleep(1)
     print(f"{bcolors.OKBLUE}path: Click(){bcolors.ENDC}")

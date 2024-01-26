@@ -6,6 +6,7 @@ from Myconfig import *
 from openpyxl import load_workbook
 from tkinter import *
 from tkinter import scrolledtext
+from pygoogletranslation import Translator
 
 sheetmap = {}
 configfile = []
@@ -107,6 +108,28 @@ def _Searchs(name, _str, _fileFD):
     for tem in templist[:int(UsingCount)]:
         _fileFD.write(f"{tem[0]} {tem[1]} {len(tem[1])} \n")
         ResultStr += (f"{tem[0]}  {len(tem[1])}\n{tem[1]} \n")
+def _Searchs_trans(name, _str, _fileFD):
+    dirc = sheetmap[name]
+    templist = []
+    templist.clear()
+    for temp in dirc.items():
+        if re.search(str(_str), str(temp[0])):
+            templist.append(temp)
+
+    templist = sorted(templist, key=sorter, reverse=True)
+
+    global ResultStr
+    _font=1;
+    if name in FontList.keys():
+        _font = FontList[name]
+    _fileFD.write(f"{name} [{_str}]\n[{_font}] \n")
+    ResultStr += (f"{name} [{_str}]\n[{_font}] \n")
+    for tem in templist[:int(UsingCount)]:
+        trans = Translator()
+        tp = trans.translate(tem[1], dest='zh-CN')
+        trantext = tp.text
+        _fileFD.write(f"{tem[0]} {tem[1]} {trantext} {len(tem[1])} \n")
+        ResultStr += (f"{tem[0]}  {len(tem[1])}\n{tem[1]} \n")
 
 
 def ButtonClick(Mod):
@@ -124,6 +147,21 @@ def ButtonClick(Mod):
         window.insert(INSERT, ResultStr)
         window.grid(row=0, column=0)
         newwindow.mainloop()
+
+def ButtonClick_trans():
+    global ResultStr
+    ResultStr = ""
+    GetConfig()
+    print(f"{bcolors.OKBLUE}Work path: {nowpath}{bcolors.ENDC}")
+    if os.path.exists(resultfilename):
+        os.remove(resultfilename)
+    fileFD = open(resultfilename, "a+", encoding='utf-8')
+    for filename in configfile:
+        for strs in configstr:
+            _Searchs_trans(filename, strs, fileFD)
+    fileFD.close()
+    self_commands = f"{Editor} {resultfilename}"
+    os.system(self_commands)
 
 
 def vaildcallback(event):
@@ -229,6 +267,7 @@ def CheckTextQuantity():
 
 
 if __name__ == '__main__':
+
     nowpath = sys.path[0]
     resultfilename = f"{nowpath}\\{resultfilename}{strftime('%Y_%m_%d_%H_%M_%S', localtime())}.txt"
     SetPath()
@@ -268,6 +307,7 @@ if __name__ == '__main__':
     # Button(down_frame, text="查询_ 查看", command=lambda: ButtonClick("Show")).pack()
     Button(down_frame, text="一键选中外包翻译", command=lambda: ChooseLanguageWB()).pack()
     Button(down_frame, text="一键选中所有文本", command=lambda: ChooseLanguageAll()).pack()
+    Button(down_frame, text="查看翻译(过翻译API速度慢)", command=lambda: ButtonClick_trans()).pack()
     Button(down_frame, text="检查文本数量", command=lambda: CheckTextQuantity()).pack()
     Button(down_frame, text="清理文本", command=lambda: ClearTXT()).pack()
     root.mainloop()

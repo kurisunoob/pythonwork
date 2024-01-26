@@ -267,7 +267,6 @@ def CheckTextQuantity():
 
 
 if __name__ == '__main__':
-
     nowpath = sys.path[0]
     resultfilename = f"{nowpath}\\{resultfilename}{strftime('%Y_%m_%d_%H_%M_%S', localtime())}.txt"
     SetPath()
@@ -281,6 +280,8 @@ if __name__ == '__main__':
     for roots, dirs, file in os.walk('.', topdown=False, followlinks=False):
         for fi in file:
             if "Language" in fi and "csv" not in fi and '~' not in fi:
+                if 'CHS' in fi:
+                    continue
                 CheckVar = IntVar()
                 ck = Checkbutton(master=left_frame, text=fi, variable=CheckVar, onvalue=1, offvalue=0, height=1,
                                  width=30, anchor="w")

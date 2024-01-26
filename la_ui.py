@@ -142,6 +142,12 @@ def ClearTXT():
                 print(f"{bcolors.OKGREEN}Remove File{fi}{bcolors.ENDC}")
                 os.remove(fi)
     os.chdir(Language_Path)
+def ChooseLanguageAll():
+    for Key in CheckVarDic:
+            if CheckVarDic[Key].get() == 1:
+                CheckVarDic[Key].set(0)
+            else:
+                CheckVarDic[Key].set(1)
 def ChooseLanguageWB():
     for Key in CheckVarDic:
         if "Arabic" in Key \
@@ -196,6 +202,32 @@ def _Searchs_format(name, _str, _fileFD):
         _fileFD.write(f"{tem[0]} {tem[1]} {len(tem[1])} \n")
         ResultStr += (f"{tem[0]}  {len(tem[1])}\n{tem[1]} \n")
 
+def CheckTextQuantity():
+    configfilelist=[]
+    Lafile = []
+    quantityset=set()
+
+    for strs in CheckVarDic.items():
+        if strs[1].get() == 1:
+            configfilelist.append(strs[0].split(".")[0])
+    for root, dirs, file in os.walk('.', topdown=False, followlinks=False):
+        for fi in file:
+            if "Language" in fi and "csv" not in fi and '~' not in fi:
+                for name in configfilelist:
+                    if name in fi:
+                        Lafile.append(fi)
+
+    for name in Lafile:
+        temp = load_workbook(name).active
+        quantityset.add(temp.max_row)
+        if len(quantityset) > 1:
+            print(f"{bcolors.FAIL}∑(￣ﾛ￣||)这个有问题{bcolors.ENDC}===>{bcolors.HEADER}{name}{bcolors.ENDC}的文本量为:{bcolors.OKBLUE}{temp.max_row}{bcolors.ENDC}")
+            quantityset.remove(temp.max_row)
+        else:
+            print(f"{bcolors.HEADER}{name}{bcolors.ENDC}的文本量为:{bcolors.OKBLUE}{temp.max_row}{bcolors.ENDC}")
+    print(f'{bcolors.OKGREEN}检查完成都ok{bcolors.ENDC}')
+
+
 if __name__ == '__main__':
     nowpath = sys.path[0]
     resultfilename = f"{nowpath}\\{resultfilename}{strftime('%Y_%m_%d_%H_%M_%S', localtime())}.txt"
@@ -231,9 +263,11 @@ if __name__ == '__main__':
     # ====================================
     down_frame = Frame(root)
     down_frame.grid(row=1, column=0)
-    Button(down_frame, text="查询_外部打开", command=lambda: ButtonClick("App")).pack()
+    Button(down_frame, text="查询_外部打开(查询Key)", command=lambda: ButtonClick("App")).pack()
+    Button(down_frame, text="检查格式(查询文本)", command=lambda: FormatCheck()).pack()
     # Button(down_frame, text="查询_ 查看", command=lambda: ButtonClick("Show")).pack()
     Button(down_frame, text="一键选中外包翻译", command=lambda: ChooseLanguageWB()).pack()
+    Button(down_frame, text="一键选中所有文本", command=lambda: ChooseLanguageAll()).pack()
+    Button(down_frame, text="检查文本数量", command=lambda: CheckTextQuantity()).pack()
     Button(down_frame, text="清理文本", command=lambda: ClearTXT()).pack()
-    Button(down_frame, text="检查格式", command=lambda: FormatCheck()).pack()
     root.mainloop()

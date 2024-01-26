@@ -225,7 +225,7 @@ def CheckTextQuantity():
             quantityset.remove(temp.max_row)
         else:
             print(f"{bcolors.HEADER}{name}{bcolors.ENDC}的文本量为:{bcolors.OKBLUE}{temp.max_row}{bcolors.ENDC}")
-    print(f'{bcolors.OKGREEN}检查完成都ok{bcolors.ENDC}')
+    print(f'{bcolors.OKGREEN}检查完成{bcolors.ENDC}')
 
 
 if __name__ == '__main__':

@@ -157,7 +157,44 @@ def ChooseLanguageWB():
             else:
                 CheckVarDic[Key].set(1)
 
+def FormatCheck():
+    global ResultStr
+    ResultStr = ""
+    GetConfig()
+    Searchs_format()
+    self_commands = f"{Editor} {resultfilename}"
+    os.system(self_commands)
 
+
+def Searchs_format():
+    print(f"{bcolors.OKBLUE}Work path: {nowpath}{bcolors.ENDC}")
+    if os.path.exists(resultfilename):
+        os.remove(resultfilename)
+    fileFD = open(resultfilename, "a+", encoding='utf-8')
+    for filename in configfile:
+        for strs in configstr:
+            _Searchs_format(filename, strs, fileFD)
+    fileFD.close()
+
+def _Searchs_format(name, _str, _fileFD):
+    dirc = sheetmap[name]
+    templist = []
+    templist.clear()
+    for temp in dirc.items():
+        if re.search(str(_str), str(temp[1])):
+            templist.append(temp)
+
+    templist = sorted(templist, key=sorter, reverse=True)
+
+    global ResultStr
+    _font=1;
+    if name in FontList.keys():
+        _font = FontList[name]
+    _fileFD.write(f"{name} [{_str}]\n[{_font}] \n")
+    ResultStr += (f"{name} [{_str}]\n[{_font}] \n")
+    for tem in templist[:int(UsingCount)]:
+        _fileFD.write(f"{tem[0]} {tem[1]} {len(tem[1])} \n")
+        ResultStr += (f"{tem[0]}  {len(tem[1])}\n{tem[1]} \n")
 
 if __name__ == '__main__':
     nowpath = sys.path[0]
@@ -198,4 +235,5 @@ if __name__ == '__main__':
     # Button(down_frame, text="查询_ 查看", command=lambda: ButtonClick("Show")).pack()
     Button(down_frame, text="一键选中外包翻译", command=lambda: ChooseLanguageWB()).pack()
     Button(down_frame, text="清理文本", command=lambda: ClearTXT()).pack()
+    Button(down_frame, text="检查格式", command=lambda: FormatCheck()).pack()
     root.mainloop()

@@ -3,17 +3,17 @@ from typing import List
 from persondata import *
 
 # 所有记录列表
-AllDataList = List[PersonData]
+AllDataList = [PersonData]
 # 没有上班时间列表
-NoOnWorkTimeList = List[PersonData]
+NoOnWorkTimeList = [PersonData]
 # 没有下班记录列表
-NoOffWorkTimeList = List[PersonData]
+NoOffWorkTimeList = [PersonData]
 # 迟到记录列表
-LateList = List[PersonData]
+LateList = [PersonData]
 # 早退记录列表
-LeaveEarlyList = List[PersonData]
+LeaveEarlyList = [PersonData]
 # 被跳过的记录列表
-SkipedList = List[PersonData]
+SkipedList = [PersonData]
 
 # 需要包含的日期
 ContainInfoDate = []
@@ -26,9 +26,9 @@ SpecialOnworkTime = []
 SpecialOffWorkTime = []
 
 NameKey = "A"
-JoinKey = "D"
-OnWorkKey = "E"
-OffWorkKey = "F"
+DateKey = 'B'
+OnWorkKey = "C"
+OffWorkKey = "D"
 BeginNumber = 3
 
 PersonalLeaveList = []

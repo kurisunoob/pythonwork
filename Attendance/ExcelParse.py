@@ -17,22 +17,24 @@ def ParseAttendanceSheet(path):
     for index in range(globaldata.BeginNumber,temp.max_row):
         NowIndex = str(index)
         name = temp[globaldata.NameKey + NowIndex]
-        join = temp[globaldata.JoinKey + NowIndex]
+        join = temp[globaldata.DateKey + NowIndex]
+
         onwork = temp[globaldata.OnWorkKey + NowIndex]
         offwork = temp[globaldata.OffWorkKey + NowIndex]
-        person=PersonData(name.value,join.value,onwork.value,offwork.value)
-        person.print()
+
+        person = PersonData(name.value, join.value, onwork.value, offwork.value)
+        print(person)
         globaldata.AllDataList.append(person)
 
-        if configdata.SkipDate(person.JoinDateTime):
-            globaldata.SkipedList.append(person)
-            continue
-
-        if  type(person.OnWorkTime) is str:
-            globaldata.NoOnWorkTimeList.append(person)
-        elif IsNormalDayBeLate(person):
-            globaldata.LateList.append(person)
-        if type(person.OffWorkTime) is str:
-            globaldata.NoOffWorkTimeList.append(person)
-        elif(IsNormalDayLeaveEarly(person)):
-            globaldata.LeaveEarlyList.append(person)
+        # if configdata.SkipDate(person.JoinDateTime):
+        #     globaldata.SkipedList.append(person)
+        #     continue
+        #
+        # if  type(person.OnWorkTime) is str:
+        #     globaldata.NoOnWorkTimeList.append(person)
+        # elif IsNormalDayBeLate(person):
+        #     globaldata.LateList.append(person)
+        # if type(person.OffWorkTime) is str:
+        #     globaldata.NoOffWorkTimeList.append(person)
+        # elif(IsNormalDayLeaveEarly(person)):
+        #     globaldata.LeaveEarlyList.append(person)

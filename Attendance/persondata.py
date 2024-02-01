@@ -16,7 +16,7 @@ class PersonData:
     OffWorkTime = time.time()
 
     def __str__(self):
-        f"姓名 : {self.Name};加入日期 : {self.JoinDateTime};上班时间 : {self.OnWorkTime};下班时间 : {self.OffWorkTime}"
+        return f"姓名 : {self.Name};加入日期 : {self.JoinDateTime};上班时间 : {self.OnWorkTime};下班时间 : {self.OffWorkTime}"
     def __eq__(self, other):
         return self.Name == other.Name and self.JoinDateTime == other.JoinDateTime and self.OnWorkTime == other.OnWorkTime and self.OffWorkTime == other.OffWorkTime
 
@@ -110,16 +110,22 @@ class SickLeavaData:
 
 
 def StrToTime_Day(strtime):
-    if "-" not in strtime:
-        return datetime.datetime.strptime(strtime, '%Y%m%d')
-    else:
-        return "-"
+    try:
+        if "-" not in strtime:
+            return datetime.datetime.strptime(strtime, '%Y%m%d').date()
+        else:
+            return "-"
+    except:
+        return '-'
 
 
 def StrToTime_Hour(strtime):
-    if "-" not in strtime:
-        return datetime.datetime.strptime(strtime, '%H:%M')
-    else:
+    try:
+        if "-" not in strtime:
+            return datetime.datetime.strptime(strtime, '%H:%M')
+        else:
+            return "-"
+    except:
         return "-"
 
 

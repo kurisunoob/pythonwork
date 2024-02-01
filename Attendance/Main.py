@@ -1,7 +1,6 @@
 import sys
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-import warnings
 import windnd
 import ExcelParse
 import UI as ui
@@ -208,18 +207,18 @@ def refreshyearlist():
 
 
 if __name__ == '__main__':
-    warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
-    tk = ttk.Window(themename="superhero", title="工具", size=[1000, 500])
-    ttk.Button(command=showdialog, text="添加病事年假").pack(anchor=ttk.N, pady=5, side=LEFT)
-    ttk.Button(command=showcalc, text="打开计算器").pack(anchor=ttk.N, pady=5, side=RIGHT)
-    ttk.Button(command=showlist, text="刷新").pack(anchor=ttk.S, pady=5, side=TOP)
-    ttk.Button(command=datapross, text="数据处理").pack(anchor=ttk.S, pady=5, side=TOP)
+    # warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
+    tk = ttk.Window(themename="superhero", title="工具", size=[500, 500])
+    # ttk.Button(command=showdialog, text="添加病事年假").pack(anchor=ttk.N, pady=5, side=LEFT)
+    # ttk.Button(command=showcalc, text="打开计算器").pack(anchor=ttk.N, pady=5, side=RIGHT)
+    # ttk.Button(command=showlist, text="刷新").pack(anchor=ttk.S, pady=5, side=TOP)
+    # ttk.Button(command=datapross, text="数据处理").pack(anchor=ttk.S, pady=5, side=TOP)
 
-    right_frame = ttk.Frame(tk, height=50, width=50)
-    right_frame.pack()
-    left_frame = ttk.Frame(tk, height=50, width=50)
+    style = ttk.Style()
+    style.configure("red.TFrame",background='red')
+    style.configure("blue.TFrame",background='blue')
+    left_frame = ttk.Frame(tk, height=50, width=50, style="blue.TFrame")
     left_frame.pack()
     if sys.platform == 'win32':
         windnd.hook_dropfiles(left_frame, func=ExcelParse.ParseAttendanceSheet)
-        windnd.hook_dropfiles(right_frame, func=printname)
     tk.mainloop()

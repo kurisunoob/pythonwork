@@ -58,12 +58,41 @@
 # ### 海龟绘图结束，隐藏海龟
 # turtle.hideturtle()
 # turtle.done()
-import tkinter
-import windnd
-from tkinter.messagebox import  showinfo
-def dragged_files(files):
-    msg = '\n'.join((item.decode('gbk') for item in files))
-    showinfo('您拖放的文件',msg)
-tk = tkinter.Tk()
-windnd.hook_dropfiles(tk,func=dragged_files)
-tk.mainloop()
+
+import tkinter as tk
+import tkinter.ttk as ttk
+
+class GUI:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title('列表')
+        self.root.geometry('400x300')
+        self.interface()
+
+    def interface(self):
+        # 创建 Treeview 控件
+        self.tree = ttk.Treeview(self.root, columns=('Name', 'Age', 'City'))
+
+        # 定义列名
+        self.tree.heading('#0', text='序号')
+        self.tree.heading('Name', text='姓名')
+        self.tree.heading('Age', text='年龄')
+        self.tree.heading('City', text='城市')
+
+        # 设置列宽度
+        self.tree.column('#0', width=50)
+        self.tree.column('Name', width=100)
+        self.tree.column('Age', width=90)
+        self.tree.column('City', width=150)
+
+        # 插入数据
+        self.tree.insert('', tk.END, text='1', values=('张三', '25', '深圳'))
+        self.tree.insert('', tk.END, text='2', values=('李四', '30', '上海'))
+        self.tree.insert('', tk.END, text='3', values=('王五', '35', '北京'))
+
+        # 显示 Treeview 控件
+        self.tree.pack()
+
+if __name__ == '__main__':
+    gui = GUI()
+    gui.root.mainloop()

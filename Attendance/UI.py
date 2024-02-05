@@ -6,6 +6,7 @@ from ttkbootstrap.constants import *
 import Data as globaldata
 from persondata import *
 from ttkbootstrap.style import Bootstyle
+from leaveutil import *
 
 
 class LeaveDataDialog(ttk.Frame):
@@ -313,6 +314,49 @@ class CollapsingFrame(ttk.Frame):
             child.grid_remove()
         else:
             child.grid()
+
+class ShowData(ttk.Frame):
+    def __init__(self, master):
+        super().__init__(master, padding=(20, 10))
+        self.interface(master)
+
+    def interface(self,master):
+        # 创建 Treeview 控件
+        self.tree = ttk.Treeview(master, columns=('Name', 'Date', 'OnTime', 'OffTime'),height=20)
+
+
+        # 定义列名
+        self.tree.heading('#0', text='序号')
+        self.tree.heading('Name', text='姓名')
+        self.tree.heading('Date', text='记录日期')
+        self.tree.heading('OnTime', text='上班时间')
+        self.tree.heading('OffTime', text='下班时间')
+
+        # 设置列宽度
+        self.tree.column('#0', width=50)
+        self.tree.column('Name', width=100)
+        self.tree.column('Date', width=90)
+        self.tree.column('OnTime', width=150)
+        self.tree.column('OffTime', width=150)
+
+        def getresult(time):
+            if type(time) == type(''):
+                return "-"
+            else:
+                return time.strftime("%H:%M:%S")
+
+        # 插入数据
+        NormalDateFilter()
+        index =0
+        for data in globaldata.HolidayList:
+            self.tree.insert('', ttk.END, text=str(index), values=(data.Name, data.JoinDateTime, getresult(data.OnWorkTime), getresult(data.OffWorkTime)))
+            index +=1
+        vbar = ttk.Scrollbar(master, orient=ttk.VERTICAL, command=self.tree.yview)
+        self.tree.configure(yscrollcommand=vbar.set)
+        # 显示 Treeview 控件
+        self.tree.grid(row=0,column=0,sticky=ttk.NSEW)
+        vbar.grid(row=0,column=1,sticky=ttk.NS)
+
 
 
 def bContainPersonData(_list: list, person):

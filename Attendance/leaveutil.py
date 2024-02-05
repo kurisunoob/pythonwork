@@ -45,3 +45,8 @@ def converttimetofloat(_time:datetime.timedelta):
     hour=int(strtime[0])
     minu = int(strtime[1])
     return hour+minu*0.1
+def NormalDateFilter():
+    for person in globaldata.AllDataList:
+        today = person.JoinDateTime.weekday()
+        if today < 5:
+            globaldata.HolidayList.append(person)

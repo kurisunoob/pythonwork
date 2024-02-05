@@ -205,14 +205,25 @@ def refreshyearlist():
         button.configure(command=lambda b=personal: RemoveYearLeaveData(b))
         button.pack(fill=X)
 
+def showdata():
+    window = ttk.Toplevel(title="数据")
+    print(ui.ShowData(window))
+    window.mainloop()
 
 if __name__ == '__main__':
+    DEBUG=1
+    globaldata.AllDataList.clear()
+    globaldata.HolidayList.clear()
+    ## test
+    if DEBUG == 1:
+        ExcelParse.ParseAttendanceSheet('D:\\WorkLog\\20240201\\attendance.xlsx',DEBUG)
     # warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
     tk = ttk.Window(themename="superhero", title="工具", size=[500, 500])
     # ttk.Button(command=showdialog, text="添加病事年假").pack(anchor=ttk.N, pady=5, side=LEFT)
     # ttk.Button(command=showcalc, text="打开计算器").pack(anchor=ttk.N, pady=5, side=RIGHT)
     # ttk.Button(command=showlist, text="刷新").pack(anchor=ttk.S, pady=5, side=TOP)
     # ttk.Button(command=datapross, text="数据处理").pack(anchor=ttk.S, pady=5, side=TOP)
+
 
     style = ttk.Style()
     style.configure("red.TFrame",background='red')
@@ -221,4 +232,5 @@ if __name__ == '__main__':
     left_frame.pack()
     if sys.platform == 'win32':
         windnd.hook_dropfiles(left_frame, func=ExcelParse.ParseAttendanceSheet)
+    ttk.Button(command=showdata, text="显示数据").pack(anchor=ttk.S, pady=5, side=TOP)
     tk.mainloop()

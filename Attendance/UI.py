@@ -1,9 +1,9 @@
 # 跳过或者添加特定日期
 import sys
+from time import strptime
 
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-import Data as globaldata
 from persondata import *
 from ttkbootstrap.style import Bootstyle
 from leaveutil import *
@@ -315,15 +315,30 @@ class CollapsingFrame(ttk.Frame):
         else:
             child.grid()
 
+
+def bContainPersonData(_list: list, person):
+    for item in _list:
+        if item == person:
+            return True
+    return False
+
+
+def show_message(str):
+    root = ttk.Toplevel()
+    root.title = "提示"
+    labels = ttk.Label(root, text=str)
+    labels.pack()
+    root.mainloop()
+
+
 class ShowData(ttk.Frame):
     def __init__(self, master):
         super().__init__(master, padding=(20, 10))
-        self.interface(master)
+        self.interface(master, globaldata.ResultList)
 
-    def interface(self,master):
+    def interface(self, master, reusltlist):
         # 创建 Treeview 控件
-        self.tree = ttk.Treeview(master, columns=('Name', 'Date', 'OnTime', 'OffTime'),height=20)
-
+        self.tree = ttk.Treeview(master, columns=('Name', 'Date', 'OnTime', 'OffTime'), height=20)
 
         # 定义列名
         self.tree.heading('#0', text='序号')
@@ -347,28 +362,65 @@ class ShowData(ttk.Frame):
 
         # 插入数据
         NormalDateFilter()
-        index =0
-        for data in globaldata.HolidayList:
-            self.tree.insert('', ttk.END, text=str(index), values=(data.Name, data.JoinDateTime, getresult(data.OnWorkTime), getresult(data.OffWorkTime)))
-            index +=1
+        index = 0
+        for data in reusltlist:
+            self.tree.insert('', ttk.END, text=str(index), values=(
+                data.Name, data.JoinDateTime, getresult(data.OnWorkTime), getresult(data.OffWorkTime)))
+            index += 1
         vbar = ttk.Scrollbar(master, orient=ttk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscrollcommand=vbar.set)
         # 显示 Treeview 控件
-        self.tree.grid(row=0,column=0,sticky=ttk.NSEW)
-        vbar.grid(row=0,column=1,sticky=ttk.NS)
+        self.tree.grid(row=0, column=0, sticky=ttk.NSEW)
+        vbar.grid(row=0, column=1, sticky=ttk.NS)
 
 
+class AddDate(ttk.Frame):
+    def __init__(self, master):
+        super().__init__(master, padding=(20, 10))
+        self.adddate(master)
 
-def bContainPersonData(_list: list, person):
-    for item in _list:
-        if item == person:
-            return True
-    return False
+    def AddToIgnore(self):
+        time = self.GetDateTime().date()
+        if time not in globaldata.SkipInfoDate:
+            globaldata.SkipInfoDate.append(time.date)
 
+    def AddToWork(self):
+        time = self.GetDateTime().date()
+        if time not in globaldata.ContainInfoDate:
+            globaldata.ContainInfoDate.append(time)
 
-def show_message(str):
-    root = ttk.Toplevel()
-    root.title = "提示"
-    labels = ttk.Label(root, text=str)
-    labels.pack()
-    root.mainloop()
+    def AddToSpecialOnTime(self):
+        time = self.GetDateTime()
+        if time not in globaldata.SpecialOnworkTime:
+            globaldata.SpecialOnworkTime.append(time)
+
+    def AddToSpecialOffTime(self):
+        time = self.GetDateTime()
+        if time not in globaldata.SpecialOffWorkTime:
+            globaldata.SpecialOffWorkTime.append(time)
+
+    def GetDateTime(self):
+        hour=self.hourentity.amountusedvar.get()
+        minutes = self.minutesentity.amountusedvar.get()
+        time = self.dateentity.entry.get()
+        strtime=f"{str(time)}/{hour}/{minutes}"
+        format="%Y/%m/%d/%H/%M"
+        resulttime = datetime.datetime.strptime(strtime,format)
+        return resulttime
+    def adddate(self, maser):
+        self.dateentity = ttk.DateEntry(maser,startdate=datetime.datetime(2023,11,4))
+        self.dateentity.grid(column=0, row=0)
+        self.hourentity = ttk.Meter(maser, amounttotal=24, amountused=10, subtext="小时", interactive=True,
+                                    meterthickness=15, stripethickness=15)
+        self.hourentity.grid(column=1, row=0)
+        self.minutesentity = ttk.Meter(maser, amounttotal=60, amountused=0, subtext="分钟", interactive=True,
+                                       meterthickness=15)
+        self.minutesentity.grid(column=2, row=0)
+        self.addtoignore = ttk.Button(maser, command=self.AddToIgnore, text="添加到休息日")
+        self.addtowork = ttk.Button(maser, command=self.AddToWork, text="添加到工作日")
+        self.addtospecialontime = ttk.Button(maser, command=self.AddToSpecialOnTime, text="添加特别的上班日期")
+        self.addtospecialofftime = ttk.Button(maser, command=self.AddToSpecialOffTime, text="添加特别的下班日期")
+        self.addtowork.grid(column=0, row=1, pady=3)
+        self.addtoignore.grid(column=0, row=2, pady=3)
+        self.addtospecialontime.grid(column=0, row=3, pady=3)
+        self.addtospecialofftime.grid(column=0, row=4, pady=3)

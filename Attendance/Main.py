@@ -8,6 +8,7 @@ import Data as globaldata
 import persondata
 import leaveutil as util
 
+
 # globa data
 LeaveListGroup: ttk.Frame
 SickLeaveGroup: ttk.Frame
@@ -19,15 +20,18 @@ attendanceSheetPath = ""
 def printname(fiel):
     print(fiel)
 
+
 def datapross():
     __personalleavedatapross()
     __sickleavedatapross()
     __yearleavedatapross()
     pass
-#查询事假超过天数的人
+
+
+# 查询事假超过天数的人
 def __personalleavedatapross_overdays():
     temppersonlist = globaldata.PersonalLeaveList.copy()
-    oklist=[]
+    oklist = []
     notoklist = []
     for _data in temppersonlist:
         hourcount = 0;
@@ -36,18 +40,20 @@ def __personalleavedatapross_overdays():
         for __data in temppersonlist:
             if _data.Name == __data.Name:
                 hourcount += _data
-                if hourcount >= 4*24:
+                if hourcount >= 4 * 24:
                     notoklist.append(_data.Name)
                     break
         oklist.append(_data.Name)
-    messagestr=''
+    messagestr = ''
     for _date in notoklist:
-        messagestr = messagestr+ f"{_date} 这个月超过了事假期限需要核查\n"
+        messagestr = messagestr + f"{_date} 这个月超过了事假期限需要核查\n"
     ui.show_message(messagestr)
-#查询病假超过天数的人
+
+
+# 查询病假超过天数的人
 def __sickleavedatapross_overdays():
     temppersonlist = globaldata.SickLeaveList.copy()
-    oklist=[]
+    oklist = []
     notoklist = []
     for _data in temppersonlist:
         hourcount = 0;
@@ -56,29 +62,33 @@ def __sickleavedatapross_overdays():
         for __data in temppersonlist:
             if _data.Name == __data.Name:
                 hourcount += _data
-                if hourcount >= 3*24:
+                if hourcount >= 3 * 24:
                     notoklist.append(_data.Name)
                     break
         oklist.append(_data.Name)
-    messagestr=''
+    messagestr = ''
     for _date in notoklist:
-        messagestr = messagestr+ f"{_date} 这个月超过了病假假期限需要核查\n"
+        messagestr = messagestr + f"{_date} 这个月超过了病假假期限需要核查\n"
     ui.show_message(messagestr)
-#查询年假超过天数的人
+
+
+# 查询年假超过天数的人
 def __yearleavedatapross_overdays():
     # 年假需要特殊处理
     pass
+
+
 def __personalleavedatapross():
     __personalleavedatapross_overdays()
-    leaveperson_data =0;
-    complete_data=0;
+    leaveperson_data = 0;
+    complete_data = 0;
     for leavedata in globaldata.PersonalLeaveList:
         name = leavedata.Name
         leavetime = leavedata.LeaveTime
         completetime = leavedata.CompleteTime
         hours = leavedata.LeaveHours
         for person in globaldata.AllDataList:
-            if person.bPersonDataWithNameAndData(name,leavetime):
+            if person.bPersonDataWithNameAndData(name, leavetime):
                 leaveperson_data = person
             if person.bPersonDataWithNameAndData(name, completetime):
                 complete_data = person
@@ -89,20 +99,22 @@ def __personalleavedatapross():
         retaketime = util.getretaketime(complete_data)
         if util.converttimetofloat(retaketime) < hours:
             pass
-           #globaldata.ErrorList = leavedata.print()
+        # globaldata.ErrorList = leavedata.print()
         else:
             globaldata.PersonalLeaveList.remove(leavedata)
+
+
 def __sickleavedatapross():
     __sickleavedatapross_overdays()
-    leaveperson_data =0;
-    complete_data=0;
+    leaveperson_data = 0;
+    complete_data = 0;
     for leavedata in globaldata.SickLeaveList:
         name = leavedata.Name
         leavetime = leavedata.LeaveTime
         completetime = leavedata.CompleteTime
         hours = leavedata.LeaveHours
         for person in globaldata.AllDataList:
-            if person.bPersonDataWithNameAndData(name,leavetime):
+            if person.bPersonDataWithNameAndData(name, leavetime):
                 leaveperson_data = person
             if person.bPersonDataWithNameAndData(name, completetime):
                 complete_data = person
@@ -111,15 +123,18 @@ def __sickleavedatapross():
         if complete_data == 0 or leaveperson_data == 0:
             ui.show_message("数据出错")
         retaketime = util.getretaketime(complete_data)
-        if util.converttimetofloat(retaketime) < hours/2:
+        if util.converttimetofloat(retaketime) < hours / 2:
             pass
-        #globaldata.ErrorList = leavedata.print()
+        # globaldata.ErrorList = leavedata.print()
         else:
             globaldata.SickLeaveList.remove(leavedata)
 
-#年假需要特殊处理
+
+# 年假需要特殊处理
 def __yearleavedatapross():
     pass
+
+
 def showlist():
     global LeaveListGroup
     global SickLeaveGroup
@@ -210,13 +225,21 @@ def showdata():
     print(ui.ShowData(window))
     window.mainloop()
 
+
+def adddate():
+    window = ttk.Toplevel(title="时间")
+    print(ui.AddDate(window))
+    window.mainloop()
+
+
 if __name__ == '__main__':
-    DEBUG=1
+    DEBUG = 1
     globaldata.AllDataList.clear()
-    globaldata.HolidayList.clear()
-    ## test
+    globaldata.ResultList.clear()
+    globaldata.ContainInfoDate.clear()
+    # test
     if DEBUG == 1:
-        ExcelParse.ParseAttendanceSheet('D:\\WorkLog\\20240201\\attendance.xlsx',DEBUG)
+        ExcelParse.ParseAttendanceSheet('D:\\WorkLog\\20240201\\attendance.xlsx', DEBUG)
     # warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
     tk = ttk.Window(themename="superhero", title="工具", size=[500, 500])
     # ttk.Button(command=showdialog, text="添加病事年假").pack(anchor=ttk.N, pady=5, side=LEFT)
@@ -224,13 +247,14 @@ if __name__ == '__main__':
     # ttk.Button(command=showlist, text="刷新").pack(anchor=ttk.S, pady=5, side=TOP)
     # ttk.Button(command=datapross, text="数据处理").pack(anchor=ttk.S, pady=5, side=TOP)
 
-
     style = ttk.Style()
-    style.configure("red.TFrame",background='red')
-    style.configure("blue.TFrame",background='blue')
+    style.configure("red.TFrame", background='red')
+    style.configure("blue.TFrame", background='blue')
     left_frame = ttk.Frame(tk, height=50, width=50, style="blue.TFrame")
-    left_frame.pack()
+    left_frame.grid(column=0, row=0, padx=10, pady=10)
     if sys.platform == 'win32':
         windnd.hook_dropfiles(left_frame, func=ExcelParse.ParseAttendanceSheet)
-    ttk.Button(command=showdata, text="显示数据").pack(anchor=ttk.S, pady=5, side=TOP)
+    ttk.Button(command=showdata, text="显示数据").grid(column=1, row=0, padx=10, pady=10)
+    ttk.Button(command=adddate, text="添加时间").grid(column=1, row=1, padx=10, pady=10)
+
     tk.mainloop()

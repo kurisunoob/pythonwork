@@ -16,14 +16,14 @@ LeaveEarlyList = [PersonData]
 SkipedList = [PersonData]
 
 # 需要包含的日期
-ContainInfoDate = []
+ContainInfoDate = [datetime]
 # 需要跳过的日期
-SkipInfoDate = []
+SkipInfoDate = [datetime]
 
 #特殊的上班时间
-SpecialOnworkTime = []
+SpecialOnworkTime = [datetime]
 #特殊的下班时间
-SpecialOffWorkTime = []
+SpecialOffWorkTime = [datetime]
 
 NameKey = "A"
 DateKey = 'B'
@@ -36,4 +36,4 @@ SickLeaveList = []
 YearLeaveList = []
 
 ErrorList=[]
-HolidayList = [PersonData]
+ResultList = [PersonData]

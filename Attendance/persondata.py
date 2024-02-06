@@ -1,7 +1,5 @@
 import datetime
 import time
-import leaveutil as util
-
 
 class PersonData:
     def __init__(self, name, JoinTime, OnTime, OffTime):
@@ -20,8 +18,13 @@ class PersonData:
     def __eq__(self, other):
         return self.Name == other.Name and self.JoinDateTime == other.JoinDateTime and self.OnWorkTime == other.OnWorkTime and self.OffWorkTime == other.OffWorkTime
 
+    def comparetime_day(t1: datetime, t2: datetime):
+        if t1.date.year == t2.date.year and t1.date.month == t2.date.month and t2.date.day == t1.date.day:
+            return True
+        return False
+
     def bPersonDataWithNameAndData(self,_name:str,Data:datetime):
-        if self.Name == _name and util.comparetime_day(self.JoinDateTime,Data):
+        if self.Name == _name and self.comparetime_day(self.JoinDateTime,Data):
             return True
         return False
 

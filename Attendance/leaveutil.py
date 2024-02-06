@@ -60,7 +60,16 @@ def NormalDateFilter():
         if bOnWork(person):
             worklist.append(person)
     for workperson in worklist:
+        worktime = workperson.JoinDateTime
         try:
+            for i,dt in enumerate(globaldata.SpecialOffWorkTime):
+                if worktime == dt.date() and globaldata.CompareHours_LeaveEarly(globaldata.SpecialOffWorkTime[i],workperson):
+                    globaldata.ResultList.append(workperson)
+                    break
+            for i,dt in enumerate(globaldata.SpecialOnworkTime):
+                if worktime == dt.date() and globaldata.CompareHours_IsBeLate(globaldata.SpecialOnworkTime[i],workperson):
+                    globaldata.ResultList.append(workperson)
+                    break
             if globaldata.IsNormalDayBeLate(workperson) or globaldata.IsNormalDayLeaveEarly(workperson):
                 globaldata.ResultList.append(workperson)
         except:

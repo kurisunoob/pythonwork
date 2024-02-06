@@ -337,6 +337,7 @@ class ShowData(ttk.Frame):
         self.interface(master, globaldata.ResultList)
 
     def interface(self, master, reusltlist):
+        globaldata.ResultList.clear()
         # 创建 Treeview 控件
         self.tree = ttk.Treeview(master, columns=('Name', 'Date', 'OnTime', 'OffTime'), height=20)
 

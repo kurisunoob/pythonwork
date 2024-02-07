@@ -141,8 +141,8 @@ def IsNormalDayLeaveEarly(person: PersonData):
 
 
 def CompareHours_IsBeLate(LimitTime: datetime, persondate: PersonData):
-    return persondate.OnWorkTime > LimitTime
+    return persondate.OnWorkTime.time() > LimitTime.time()
 
 
 def CompareHours_LeaveEarly(LimitTime: datetime, persondate: PersonData):
-    return persondate.OffWorkTime < LimitTime
+    return persondate.OffWorkTime.time() < LimitTime.time()

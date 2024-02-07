@@ -58,5 +58,4 @@
 # ### 海龟绘图结束，隐藏海龟
 # turtle.hideturtle()
 # turtle.done()
-import ttkbootstrap as ttk
-ttk.Menubutton()
+

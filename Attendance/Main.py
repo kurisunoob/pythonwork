@@ -4,6 +4,7 @@ from ttkbootstrap.constants import *
 import windnd
 import ExcelParse
 import UI as ui
+import TimePickerUI as TimePicker
 import Data as globaldata
 import persondata
 import leaveutil as util
@@ -228,7 +229,7 @@ def showdata():
 
 def adddate():
     window = ttk.Toplevel(title="时间")
-    print(ui.AddDate(window))
+    print(TimePicker.AddDate(window))
     window.mainloop()
 
 

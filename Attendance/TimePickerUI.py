@@ -100,8 +100,6 @@ class ShowData_SpecialOnWork(ttk.Frame):
             globaldata.SpecialOnworkTime.remove(row.values.pop())
             row.delete()
     def interface(self, master, reusltlist):
-        globaldata.ResultList.clear()
-        NormalDateFilter()
         coldate=[
             {"text": "特殊上班日期", "stretch": False},
         ]

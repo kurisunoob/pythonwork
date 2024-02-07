@@ -58,4 +58,25 @@
 # ### 海龟绘图结束，隐藏海龟
 # turtle.hideturtle()
 # turtle.done()
+import tkinter as tk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
+def open_new_window():
+    new_window = ttk.Window()
+    new_window.title("New Window")
+    new_window.geometry("400x300")
+
+    label = ttk.Label(new_window, text="Hello from the new window!", bootstyle=PRIMARY)
+    label.pack(pady=20)
+
+    new_window.mainloop()
+
+root = tk.Tk()
+root.title("Main Window")
+root.geometry("400x300")
+
+button = ttk.Button(root, text="Open New Window", command=open_new_window, bootstyle=SUCCESS)
+button.pack(pady=20)
+
+root.mainloop()

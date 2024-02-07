@@ -7,6 +7,7 @@ from ttkbootstrap.style import Bootstyle
 from ttkbootstrap.tableview import Tableview
 from leaveutil import *
 
+
 class LeaveDataDialog(ttk.Frame):
     def __init__(self, master):
         super().__init__(master, padding=(20, 10))
@@ -328,13 +329,28 @@ def show_message(str):
     labels.pack()
     root.mainloop()
 
+
 class ShowData(ttk.Frame):
     def __init__(self, master):
         super().__init__(master, padding=(20, 10))
         self.interface(master, globaldata.ResultList)
 
+    def Delete(self):
+        selected_rows = self.tree.get_rows(selected=True)
+        for row in selected_rows:
+            name = row.values.pop()
+            name = row.values.pop()
+            date = row.values.pop()
+            name = row.values.pop()
+            def beq(person: PersonData):
+                return name == person.Name and date == person.JoinDateTime
+
+            for person in globaldata.ResultList:
+                if beq(person):
+                    globaldata.ResultList.remove(person)
+                    row.delete()
+
     def interface(self, master, reusltlist):
-        globaldata.ResultList.clear()
         # 创建 Treeview 控件
         coldata = [
             {"text": "姓名", "stretch": False},
@@ -342,26 +358,23 @@ class ShowData(ttk.Frame):
             {"text": "上班时间", "stretch": False},
             {"text": "下班时间", "stretch": False},
         ]
-        self.tree = ttk.tableview.Tableview(master, coldata=coldata,height=30,pagesize=30,searchable=True,paginated=True)
+        self.tree = ttk.tableview.Tableview(master, coldata=coldata, height=30, pagesize=30, searchable=True,
+                                            paginated=True)
+
         def getresult(time):
             if type(time) == type(''):
                 return "-"
             else:
                 return time.strftime("%H:%M:%S")
 
-        # 插入数据
-        NormalDateFilter()
-        index = 0
+
+        if len(globaldata.ResultList) <=  0:
+            NormalDateFilter()
         for data in reusltlist:
             self.tree.insert_row(values=([
                 data.Name, data.JoinDateTime, getresult(data.OnWorkTime), getresult(data.OffWorkTime)
             ]
             ))
-            index += 1
-        # vbar = ttk.Scrollbar(master, orient=ttk.VERTICAL, command=self.tree.yview)
-        # self.tree.configure(yscrollcommand=vbar.set)
-        # vbar.grid(row=0, column=1, sticky=ttk.NS)
-        # 显示 Treeview 控件
-        self.tree.grid(row=0, column=0, sticky=ttk.NSEW)
-
-
+        self.deletebutton = ttk.Button(master, text="删除", command=self.Delete)
+        self.deletebutton.grid(row=0, column=1)
+        self.tree.grid(row=0, column=0)

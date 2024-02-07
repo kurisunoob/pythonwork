@@ -61,6 +61,7 @@ def bOnWork(data: globaldata.PersonData):
 
 
 def NormalDateFilter():
+    globaldata.ResultList.clear()
     worklist = []
     for person in globaldata.AllDataList:
         if bOnWork(person):

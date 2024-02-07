@@ -222,6 +222,7 @@ def refreshyearlist():
         button.pack(fill=X)
 
 def showdata():
+    # window = ttk.Toplevel(title="数据")
     window = ttk.Toplevel(title="数据")
     print(ui.ShowData(window))
     window.mainloop()
@@ -247,7 +248,6 @@ if __name__ == '__main__':
     # ttk.Button(command=showcalc, text="打开计算器").pack(anchor=ttk.N, pady=5, side=RIGHT)
     # ttk.Button(command=showlist, text="刷新").pack(anchor=ttk.S, pady=5, side=TOP)
     # ttk.Button(command=datapross, text="数据处理").pack(anchor=ttk.S, pady=5, side=TOP)
-
     style = ttk.Style()
     style.configure("red.TFrame", background='red')
     style.configure("blue.TFrame", background='blue')

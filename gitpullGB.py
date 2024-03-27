@@ -4,7 +4,6 @@ import win32gui
 import win32api
 import win32con
 import sys
-# import  msvcrt
 import threading
 
 
@@ -104,5 +103,5 @@ def Click():
 
 
 if __name__ == "__main__":
-    self_pull()
-    # merge_pull()
+    # self_pull()
+    merge_pull()

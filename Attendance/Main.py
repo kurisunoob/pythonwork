@@ -8,6 +8,7 @@ import TimePickerUI as TimePicker
 import Data as globaldata
 import persondata
 import leaveutil as util
+import os
 
 
 # globa data
@@ -235,7 +236,8 @@ def adddate():
 
 
 if __name__ == '__main__':
-    DEBUG = 1
+    print(ttk.file)
+    DEBUG = 0
     globaldata.AllDataList.clear()
     globaldata.ResultList.clear()
     globaldata.ContainInfoDate.clear()
@@ -252,10 +254,12 @@ if __name__ == '__main__':
     style.configure("red.TFrame", background='red')
     style.configure("blue.TFrame", background='blue')
     left_frame = ttk.Frame(tk, height=50, width=50, style="blue.TFrame")
-    left_frame.grid(column=0, row=0, padx=10, pady=10)
+    ttk.Label(tk,text="拖入xlsx文件(名称不能有中文)").grid(column = 0,row = 0)
+    left_frame.grid(column=0, row=1, padx=10, pady=10)
     if sys.platform == 'win32':
         windnd.hook_dropfiles(left_frame, func=ExcelParse.ParseAttendanceSheet)
-    ttk.Button(command=showdata, text="显示数据").grid(column=1, row=0, padx=10, pady=10)
-    ttk.Button(command=adddate, text="添加时间").grid(column=1, row=1, padx=10, pady=10)
+    ttk.Button(command=showdata, text="显示数据").grid(column=0, row=2, padx=10, pady=10)
+    ttk.Button(command=adddate, text="添加时间").grid(column=0, row=3, padx=10, pady=10)
+
 
     tk.mainloop()

@@ -58,25 +58,75 @@
 # ### 海龟绘图结束，隐藏海龟
 # turtle.hideturtle()
 # turtle.done()
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+# import tkinter as tk
+# import ttkbootstrap as ttk
+# from ttkbootstrap.constants import *
+#
+# def open_new_window():
+#     new_window = ttk.Window()
+#     new_window.title("New Window")
+#     new_window.geometry("400x300")
+#
+#     label = ttk.Label(new_window, text="Hello from the new window!", bootstyle=PRIMARY)
+#     label.pack(pady=20)
+#
+#     new_window.mainloop()
+#
+# root = tk.Tk()
+# root.title("Main Window")
+# root.geometry("400x300")
+#
+# button = ttk.Button(root, text="Open New Window", command=open_new_window, bootstyle=SUCCESS)
+# button.pack(pady=20)
+#
+# root.mainloop()
+# import random
+#
+# ROCK, SCISSOR, PAPER = range(3)
+#
+# # 构建“赢”的基础规则：“我：对手”
+# WIN_RULE = {
+#     ROCK: SCISSOR,
+#     SCISSOR: PAPER,
+#     PAPER: ROCK,
+# }
+#
+# def build_rules():
+#     """构建完整的游戏规则"""
+#     rules = {}
+#     for k, v in WIN_RULE.items():
+#         rules[(k, v)] = True
+#         rules[(v, k)] = False
+#     return rules
+#
+# def game_v2(rules):
+#     """生成一局随机游戏，并打印游戏结果。"""
+#     a = random.choice([ROCK, SCISSOR, PAPER])
+#     b = random.choice([ROCK, SCISSOR, PAPER])
+#     print(f"玩家 A：{a}，玩家 B：{b}")
+#
+#     if a == b:
+#         print("平局")
+#     elif rules[(a, b)]:
+#         print("玩家 A 获胜")
+#     else:
+#         print("玩家 B 获胜")
+#
+# if __name__ == '__main__':
+#     rules = build_rules()
+#     for num in range(10):
+#         print(f">>> Game #{num}")
+#         game_v2(rules)
+import re
+def _f(r):
+    t = r.group()
+    if len(t) <= 2:
+        return t
+    return f'{t[0]}{len(t)-2}{t[-1]}'
 
-def open_new_window():
-    new_window = ttk.Window()
-    new_window.title("New Window")
-    new_window.geometry("400x300")
 
-    label = ttk.Label(new_window, text="Hello from the new window!", bootstyle=PRIMARY)
-    label.pack(pady=20)
+def i18n(s: str) -> str:
+    s = re.sub(r'\w+', _f, s)
+    return s
 
-    new_window.mainloop()
-
-root = tk.Tk()
-root.title("Main Window")
-root.geometry("400x300")
-
-button = ttk.Button(root, text="Open New Window", command=open_new_window, bootstyle=SUCCESS)
-button.pack(pady=20)
-
-root.mainloop()
+print(i18n("sadoifja osidjfoia"))

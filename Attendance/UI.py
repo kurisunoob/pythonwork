@@ -136,6 +136,7 @@ class Calculator(ttk.Frame):
         self.digitsvar = ttk.StringVar(value="")
         self.xnum = ttk.DoubleVar()
         self.ynum = ttk.DoubleVar()
+
         self.operator = ttk.StringVar(value="+")
 
         if "bootstyle" in kwargs:
@@ -368,8 +369,8 @@ class ShowData(ttk.Frame):
                 return time.strftime("%H:%M:%S")
 
 
-        if len(globaldata.ResultList) <=  0:
-            NormalDateFilter()
+        # if len(globaldata.ResultList) <=  0:
+        NormalDateFilter()
         for data in reusltlist:
             self.tree.insert_row(values=([
                 data.Name, data.JoinDateTime, getresult(data.OnWorkTime), getresult(data.OffWorkTime)
@@ -378,3 +379,4 @@ class ShowData(ttk.Frame):
         self.deletebutton = ttk.Button(master, text="删除", command=self.Delete)
         self.deletebutton.grid(row=0, column=1)
         self.tree.grid(row=0, column=0)
+    

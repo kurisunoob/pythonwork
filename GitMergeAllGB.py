@@ -32,6 +32,7 @@ paths = [
     "D:\\simulator\\PureObject\\gn\\simulator_landlord_android_xiaomi",
     "D:\\simulator\\PureObject\\gn\\simulator_landlord_ios",
     "D:\\simulator\\simulator_landlord",
+    "D:\\simulator\\simulator_landlord_android_TAPTAP",
     "D:\\simulator\\simulator_landlord_GB",
     "D:\\simulator\\simulator_landlord_GB_android",
     "D:\\simulator\\simulator_landlord_GB_ios",
@@ -39,9 +40,8 @@ paths = [
 def self_pull():
     for path in paths:
         os.chdir(path)
-
         print(f"{bcolors.OKBLUE}path: {os.getcwd()}{bcolors.ENDC}")
-        self_commands = "git.exe pull -v --progress --no-rebase \"origin\""
+        self_commands = "git.exe pull -v --prune --no-rebase \"origin\""
         os.system(self_commands)
 
 if __name__ == "__main__":

@@ -2,6 +2,9 @@ import os
 import re
 import sys
 from time import strftime, localtime
+
+import openpyxl.worksheet.worksheet
+from openpyxl.workbook.child import _WorkbookChild
 from Myconfig import *
 from openpyxl import load_workbook
 from tkinter import *
@@ -25,7 +28,7 @@ FontList= {"Language_Arabic": "ARIALNB", "Language_Russian": "ARIALNB", "Languag
 
 
 def SetPath():
-    Language_Path = "D:\\simulator\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel";
+    Language_Path = r"D:\simulator\simulator_landlord_GB\ExDataHome\Excel\Excel"
     os.chdir(Language_Path)
 
 
@@ -172,7 +175,7 @@ def vaildcallback(event):
 
 
 def ClearTXT():
-    Language_Path = "D:\\simulator\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel";
+    Language_Path = "D:\\simulator\\PureObject\\simulator_landlord_GB\\ExDataHome\\Excel\\Excel"
     os.chdir(sys.path[0])
     for root, dirs, file in os.walk('.', topdown=False, followlinks=False):
         for fi in file:

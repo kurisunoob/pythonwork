@@ -1,14 +1,13 @@
-import datetime
-import os
-import time
 from concurrent.futures import thread
+import os
+import sys
 
-import win32gui
+import threading
+import time
+
 import win32api
 import win32con
-import sys
-#import  msvcrt
-import threading
+import win32gui
 
 class bcolors:
     HEADER = '\033[95m'
@@ -91,7 +90,6 @@ def get_mesh_windows(hWndList, name):
     winhwnd = []
     for hWnd in hWndList:
         title = win32gui.GetWindowText(hWnd)
-        clsname = win32gui.GetClassName(hWnd)
 
         if name in title:
             winhwnd.append(hWnd)
@@ -103,7 +101,6 @@ def Click():
     win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), hWndList)
     name = ' - TortoiseGit'
     winhwnds = get_mesh_windows(hWndList, name)
-    hWndcList = []
     for wh in winhwnds:
         hbutton = win32gui.FindWindowEx(wh, 0, 'Button', 'OK')
         print(f"{bcolors.HEADER}{win32gui.GetWindowText(wh)}{bcolors.ENDC}")

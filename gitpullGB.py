@@ -79,7 +79,6 @@ def get_mesh_windows(hWndList, name):
     winhwnd = []
     for hWnd in hWndList:
         title = win32gui.GetWindowText(hWnd)
-        clsname = win32gui.GetClassName(hWnd)
 
         if name in title:
             winhwnd.append(hWnd)
@@ -103,5 +102,5 @@ def Click():
 
 
 if __name__ == "__main__":
-    # self_pull()
+    self_pull()
     merge_pull()

@@ -1,11 +1,5 @@
 import os
-import time
-import win32gui
-import win32api
-import win32con
-import sys
-# import  msvcrt
-import threading
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

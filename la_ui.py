@@ -198,6 +198,7 @@ def ChooseLanguageWB():
                 or "Russian" in Key \
                 or "Thai" in Key \
                 or "ES" in Key \
+                 or "TR" in Key \
                 or "Vietnamese" in Key:
             if CheckVarDic[Key].get() == 1:
                 CheckVarDic[Key].set(0)

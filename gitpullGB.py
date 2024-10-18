@@ -28,12 +28,12 @@ paths = [
     "D:\\simulator\\PureObject\\simulator_landlord_GB_android_ONESTORE",
 ]
 merge_commands = [
-    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_master",
-    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_master",
-    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_mater_ios",
-    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_mater_ios",
-    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_mater_ios",
-    "git.exe pull --progress --no-rebase \"origin\" sim2_oversea_master_android"
+    "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master",
+   "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master",
+    "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_mater_ios",
+    "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_mater_ios",
+    "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_mater_ios",
+    "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master_android"
 ]
 push_commands = [
     "TortoiseGitProc.exe /command:push /closeonend:2",
@@ -44,14 +44,23 @@ push_commands = [
     "TortoiseGitProc.exe /command:push /closeonend:2"
 ]
 
-
+logpath = "D:\\simulator\\PureObject\\gitdiff.log"
 def self_pull():
+    os.remove(logpath)
     for path in paths:
         os.chdir(path)
 
         print(f"{bcolors.OKBLUE}path: {os.getcwd()}{bcolors.ENDC}")
         self_commands = "git.exe pull --progress --no-rebase \"origin\""
         os.system(self_commands)
+        with open(logpath, 'a') as file:
+            file.write(f"{path}:\n")
+        self_commands = f"git.exe log --oneline -5 >> {logpath}"
+        os.system(self_commands)
+        self_commands = f"git.exe diff HEAD >> {logpath}"
+        os.system(self_commands)
+        with open(logpath, 'a') as file:
+            file.write(f"\n========================================================================\n")
 
 
 def merge_pull():

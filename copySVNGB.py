@@ -32,6 +32,12 @@ if __name__ == '__main__':
     source_dir = 'D:\\simulator\\PureObject\\simulator_landlord_GB\\Game\\Assets'
     destination_dir = 'D:\\SVN\\trunk\\game\\simulator_landlord_GB\\Game\\Assets'
     copy()
+    source_dir = 'D:\\simulator\\PureObject\\simulator_landlord_GB\\Game\\Packages'
+    destination_dir = 'D:\\SVN\\trunk\\game\\simulator_landlord_GB\\Game\\Packages'
+    copy()
+    source_dir = 'D:\\simulator\\PureObject\\simulator_landlord_GB\\Game\\ProjectSettings'
+    destination_dir = 'D:\\SVN\\trunk\\game\\simulator_landlord_GB\\Game\\ProjectSettings'
+    copy()
     path= "D:\\SVN\\trunk\\game\\simulator_landlord_GB";
     self_commands = f"TortoiseProc.exe /command:commit /path:{path}"
     os.system(self_commands)

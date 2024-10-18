@@ -28,11 +28,11 @@ paths = [
     "D:\\simulator\\PureObject\\gn\\simulator_landlord_android_xiaomi",
 ]
 merge_commands = [
-    "git.exe pull --progress  --no-rebase \"origin\" sim2_master",
-    "git.exe pull --progress  --no-rebase \"origin\" sim2_master",
-    "git.exe pull --progress  --no-rebase \"origin\" sim2_android_ads",
-    "git.exe pull --progress  --no-rebase \"origin\" sim2_android_ads",
-    "git.exe pull --progress  --no-rebase \"origin\" sim2_android_ads"
+    "git.exe pull --progress  --no-edit --no-rebase \"origin\" sim2_master",
+    "git.exe pull --progress  --no-edit --no-rebase \"origin\" sim2_master",
+    "git.exe pull --progress  --no-edit --no-rebase \"origin\" sim2_android_ads",
+    "git.exe pull --progress  --no-edit --no-rebase \"origin\" sim2_android_ads",
+    "git.exe pull --progress  --no-edit --no-rebase \"origin\" sim2_android_ads"
 ]
 push_commands = [
         "TortoiseGitProc.exe /command:push /closeonend:2",
@@ -110,5 +110,5 @@ def Click():
 
 
 if __name__ == "__main__":
-    # self_pull()
+    self_pull()
     merge_pull()

@@ -29,21 +29,29 @@ paths = [
 ]
 merge_commands = [
     "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master",
-   "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master",
+    "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master",
     "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_mater_ios",
     "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_mater_ios",
     "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_mater_ios",
     "git.exe pull --progress --no-edit --no-rebase \"origin\" sim2_oversea_master_android"
 ]
-push_commands = [
-    "TortoiseGitProc.exe /command:push /closeonend:2",
-    "TortoiseGitProc.exe /command:push /closeonend:2",
-    "TortoiseGitProc.exe /command:push /closeonend:2",
-    "TortoiseGitProc.exe /command:push /closeonend:2",
-    "TortoiseGitProc.exe /command:push /closeonend:2",
-    "TortoiseGitProc.exe /command:push /closeonend:2"
-]
+# push_commands = [
+#     "TortoiseGitProc.exe /command:push /closeonend:2",
+#     "TortoiseGitProc.exe /command:push /closeonend:2",
+#     "TortoiseGitProc.exe /command:push /closeonend:2",
+#     "TortoiseGitProc.exe /command:push /closeonend:2",
+#     "TortoiseGitProc.exe /command:push /closeonend:2",
+#     "TortoiseGitProc.exe /command:push /closeonend:2"
+# ]
 
+push_commands = [
+    "git.exe push -v --progress -- \"origin\" sim2_oversea_master_android:sim2_oversea_master_android",
+    "git.exe push -v --progress -- \"origin\" sim2_oversea_mater_ios:sim2_oversea_mater_ios",
+    "git.exe push -v --progress -- \"origin\" sim_oversea_mater_ios_en:sim_oversea_mater_ios_en",
+    "git.exe push -v --progress -- \"origin\" sim2_oversea_master_ios_jp:sim2_oversea_master_ios_jp",
+    "git.exe push -v --progress -- \"origin\" sim2_oversea_master_ios_kr:sim2_oversea_master_ios_kr",
+    "git.exe push -v --progress -- \"origin\" sim2_oversea_master_android_onestore:sim2_oversea_master_android_onestore",
+]
 logpath = "D:\\simulator\\PureObject\\gitdiff.log"
 def self_pull():
     os.remove(logpath)

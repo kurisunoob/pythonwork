@@ -24,7 +24,7 @@ FontList= {"Language_Arabic": "ARIALNB", "Language_Russian": "ARIALNB", "Languag
            "Language_DE": "English", "Language_English": "English", "Language_ES": "Vietnamese",
            "Language_French": "Vietnamese", "Language_Italian": "Vietnamese", "Language_PTBR": "Vietnamese",
            "Language_Vietnamese": "Vietnamese", "Language_Japanese": "Japanese", "Language_Korean": "Korean",
-           "Language_Thai": "Thai"}
+           "Language_Thai": "Thai","Language_TR": "Vietnamese"}
 
 
 def SetPath():
@@ -199,6 +199,8 @@ def ChooseLanguageWB():
                 or "Thai" in Key \
                 or "ES" in Key \
                  or "TR" in Key \
+                 or "JP" in Key \
+                 or "TC" in Key \
                 or "Vietnamese" in Key:
             if CheckVarDic[Key].get() == 1:
                 CheckVarDic[Key].set(0)

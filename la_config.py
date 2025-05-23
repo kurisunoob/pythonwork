@@ -42,32 +42,18 @@ def LoadXlsl():
     sheetlist = []
     os.chdir(Language_Path)
     for root, dirs, file in os.walk('.', topdown=False, followlinks=False):
-        for fi in file:
-            if "Language" in fi and "csv" not in fi and '~' not in fi:
-                for name in configfile:
-                    if name in fi:
-                        Lafile.append(fi)
+        Lafile.extend([fi for fi in file if "Language" in fi and "csv" not in fi and '~' not in fi and any(
+            name in fi for name in configfile)])
 
     for name in Lafile:
         temp = load_workbook(name).active
         sheetlist.append(temp)
-        tempdic = {}
         usedvale = temp['B6:' + 'B' + str(temp.max_row)]
-        Values = []
-        for vale in usedvale:
-            for v in vale:
-                Values.append(v.value)
+        Values = [v.value for vale in usedvale for v in vale]
         usedvale = temp['A6:' + 'A' + str(temp.max_row)]
-        Keys = []
-        for vale in usedvale:
-            for v in vale:
-                Keys.append(v.value)
+        Keys = [v.value for vale in usedvale for v in vale]
 
-        for index in range(len(Keys)):
-            _key = Keys[index]
-            _value = Values[index]
-            tempdic[_key] = _value
-        sheetmap[temp.title] = tempdic
+        sheetmap[temp.title] = dict(zip(Keys, Values))
 
 
 def _Searchs(name, _str):

@@ -35,11 +35,11 @@ merge_commands = [
     "git.exe pull --progress  --no-edit --no-rebase \"origin\" sim2_android_ads"
 ]
 push_commands = [
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2",
-        "TortoiseGitProc.exe /command:push /closeonend:2"
+        "git.exe push --progress  -- \"origin\" sim2_android_ads:sim2_android_ads",
+        "git.exe push --progress  -- \"origin\" sim2_ios:sim2_ios",
+        "git.exe push --progress  -- \"origin\" sim2_android_ads_taptap:sim2_android_ads_taptap",
+        "git.exe push --progress  -- \"origin\" sim2_android_ads_parent:sim2_android_ads_parent",
+        "git.exe push --progress  -- \"origin\" sim2_android_ads_xiaomi:sim2_android_ads_xiaomi"
 ]
 def _thread_self_pull(i):
     path = paths[i]
